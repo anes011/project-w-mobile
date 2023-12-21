@@ -1,10 +1,12 @@
-import { Text, View, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, TextInput, Dimensions } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { useState } from 'react';
 
 function Nav() {
 
     const [openSearch, setOpenSearch] = useState(false);
+
+    const { width, height } = Dimensions.get('window');
 
     return(
         <View>
@@ -15,7 +17,7 @@ function Nav() {
 
             {
                 openSearch ? (
-                    <View style={styles.searchContainer}>
+                    <View style={[styles.searchContainer, {height: height / 15}]}>
                         <TextInput style={styles.searchInput} />
                         <TouchableOpacity onPress={() => setOpenSearch(false)}>
                             <Feather name="search" size={24} color="black" />
@@ -62,7 +64,6 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: 'rgb(197, 41, 155)',
         borderRadius: 40,
-        height: 45,
         paddingHorizontal: 15
     },
     searchInput: {
