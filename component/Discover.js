@@ -11,7 +11,7 @@ function Discover() {
     const { width, height } = Dimensions.get('window');
 
     return(
-        <View>
+        <View style={styles.discover}>
             <View style={styles.btnsContainer}>
                 <TouchableOpacity onPress={() => setTypePressed('hotel')} style={styles.buttons}>
                     <Text>Hotel</Text>
@@ -34,8 +34,8 @@ function Discover() {
                 </TouchableOpacity>
             </View>
 
-            <ScrollView style={[styles.offersContainer, {height: height / 2.4}]} horizontal>
-                <View style={[styles.container, {width: width / 2.3}]}>
+            <ScrollView style={[styles.offersContainer, {height: height / 2.3}]} horizontal>
+                <View style={[styles.container, {width: width / 2}]}>
                     <Image style={styles.offerImages} source={{uri: 'https://www.luxxu.net/blog/wp-content/uploads/2022/06/LIVING_1-1-scaled.jpg'}} />
                     <View style={styles.rating}>
                         <Text style={styles.ratingText}>4.3</Text>
@@ -49,7 +49,7 @@ function Discover() {
                         </View>
                     </View>
                 </View>
-                <View style={[styles.container, {width: width / 2.3}]}>
+                <View style={[styles.container, {width: width / 2}]}>
                     <Image style={styles.offerImages} source={{uri: 'https://www.ministryofvillas.com/wp-content/uploads/2019/04/koh-samui-limesamuivillas-villazest-01.jpg'}} />
                     <View style={styles.rating}>
                         <Text style={styles.ratingText}>4.3</Text>
@@ -63,7 +63,7 @@ function Discover() {
                         </View>
                     </View>
                 </View>
-                <View style={[styles.container, {width: width / 2.3}]}>
+                <View style={[styles.container, {width: width / 2}]}>
                     <Image style={styles.offerImages} source={{uri: 'https://i.pinimg.com/originals/a8/e7/06/a8e7064ac87b25c9197dca73dc345610.jpg'}} />
                     <View style={styles.rating}>
                         <Text style={styles.ratingText}>4.3</Text>
@@ -83,6 +83,9 @@ function Discover() {
 };
 
 const styles = StyleSheet.create({
+    discover: {
+        marginBottom: 40
+    },
     btnsContainer: {
         flexDirection: 'row',
         marginTop: 20,

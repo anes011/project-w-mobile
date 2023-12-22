@@ -5,13 +5,13 @@ function SignPage() {
     const { width, height } = Dimensions.get('window');
 
     return(
-        <ImageBackground style={styles.background} source={{uri: 'https://i.pinimg.com/originals/a8/e7/06/a8e7064ac87b25c9197dca73dc345610.jpg'}}>
+        <ImageBackground style={styles.background} source={{uri: 'https://www.luxxu.net/blog/wp-content/uploads/2022/06/LIVING_1-1-scaled.jpg'}}>
             <View style={[styles.logInBtn, {height: height / 12}]}>
                 <Text style={styles.logInBtnText}>Log in</Text>
             </View>
-            <View>
-                <Text>You don't have an account?</Text>
-                <Text>Sign up</Text>
+            <View style={styles.signUp}>
+                <Text style={styles.signUpText}>You don't have an account?</Text>
+                <Text style={styles.signUpLink}>Sign up</Text>
             </View>
         </ImageBackground>
     )
@@ -19,11 +19,12 @@ function SignPage() {
 
 const styles = StyleSheet.create({
     background: {
-        flex: 1
+        flex: 1,
+        resizeMode: 'cover'
     },
     logInBtn: {
         position: 'absolute',
-        backgroundColor: '#9a5a00',
+        backgroundColor: 'rgb(197, 41, 155)',
         bottom: 200,
         left: 40,
         right: 40,
@@ -36,6 +37,26 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontSize: 25,
         fontWeight: '500'
+    },
+    signUp: {
+        position: 'absolute',
+        bottom: 150,
+        left: 40,
+        right: 40,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        gap: 20
+    },
+    signUpText: {
+        color: '#fff',
+        fontSize: 18,
+        fontWeight: '500'
+    },
+    signUpLink: {
+        fontSize: 18,
+        fontWeight: '500',
+        color: 'rgb(197, 41, 155)'
     }
 });
 

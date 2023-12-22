@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
@@ -16,11 +16,11 @@ function BottomNav() {
     };
 
     const handleFavourites = () => {
-        setPressedButton('favourites')
+        setPressedButton('favourites');
     };
 
     const handleCarte = () => {
-        setPressedButton('carte')
+        setPressedButton('carte');
     };
 
     const handleAccount = () => {
@@ -53,7 +53,10 @@ const styles = StyleSheet.create({
     bottomNav: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginTop: 10
+        position: 'absolute',
+        left: 10,
+        right: 10,
+        bottom: 0
     }
 });
 
