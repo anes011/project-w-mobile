@@ -1,9 +1,7 @@
-import MainPage from './pages/MainPage';
-import SignPage from './pages/SignPage';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import StartupPage from './pages/StartupPage';
 import { StyleSheet, View, StatusBar } from 'react-native';
+import HomePage from './pages/HomePage';
 
 export default function App() {
 
@@ -12,22 +10,12 @@ export default function App() {
   return (
     <NavigationContainer>
       <StatusBar style='auto' />
-      <Stack.Navigator initialRouteName='Startup' screenOptions={{
+      <Stack.Navigator initialRouteName='Home' screenOptions={{
         headerShown: false,
         cardStyle: {backgroundColor: 'white'}
       }}>
-        <Stack.Screen name='Home' component={MainPage} />
-        <Stack.Screen name='Sign' component={SignPage} />
-        <Stack.Screen name='Startup' component={StartupPage} />
+        <Stack.Screen name='Home' component={HomePage} />
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  app: {
-    flex: 1,
-    borderWidth: 4,
-    borderColor: 'green'
-  }
-});
