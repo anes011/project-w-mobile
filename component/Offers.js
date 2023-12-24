@@ -1,17 +1,24 @@
-import { View, Text, StyleSheet, ScrollView, Dimensions, Image } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Dimensions, Image, TouchableOpacity } from 'react-native';
 import { BlurView } from 'expo-blur';
 import { FontAwesome } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 function Offers() {
 
+    const navigation = useNavigation();
+
     const { width, height } = Dimensions.get('window');
+
+    const goToOffer = () => {
+        navigation.navigate('Offer');
+    };
 
     return(
         <View style={[styles.offerContainer, {height: height / 1.7}]}>
             <ScrollView>
-                <View style={[styles.offer, {height: height / 1.7}]}>
+                <TouchableOpacity onPress={goToOffer} style={[styles.offer, {height: height / 1.7}]}>
                     <Image style={{flex: 1}} source={{uri: 'https://cdn.onekindesign.com/wp-content/uploads/2019/11/Striking-Modern-Villa-Design-Marmol-Radziner-02-1-Kindesign.jpg'}} />
-                    <BlurView intensity={50} tint='dark' style={[styles.description, {height: height / 6}]}>
+                    <BlurView intensity={80} tint='dark' style={[styles.description, {height: height / 6}]}>
                         <Text style={styles.price}>$100,000</Text>
                         <Text style={styles.locationDetails}>456 Main St.Anytown, USA 12345</Text>
                     </BlurView>
@@ -20,7 +27,7 @@ function Offers() {
                         <FontAwesome name="star" size={24} color="rgb(197, 41, 155)" />
                         <Text style={styles.rateText}>4.8</Text>
                     </View>
-                </View>
+                </TouchableOpacity>
 
                 <View style={[styles.offer, {height: height / 1.7}]}>
                     <Image style={{flex: 1}} source={{uri: 'https://www.ministryofvillas.com/wp-content/uploads/2021/01/bali-river-house-living.jpg'}} />
@@ -128,7 +135,6 @@ const styles = StyleSheet.create({
         marginBottom: 30
     },
     description: {
-        backgroundColor: 'rgba(0, 0, 0, .7)',
         position: 'absolute',
         bottom: 0,
         left: 0,

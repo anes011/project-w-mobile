@@ -8,7 +8,7 @@ function BottomNav() {
 
     const { width, height } = Dimensions.get('window');
 
-    const indicator = new Animated.Value(33);
+    const indicator = new Animated.Value(36);
 
     const home = new Animated.Value(-13);
 
@@ -18,11 +18,9 @@ function BottomNav() {
 
     const profile = new Animated.Value(0);
 
-    const indicatorWidth = width / 20;
-
     const moveToHome = () => {
         Animated.timing(indicator, {
-            toValue: 33,
+            toValue: 36,
             duration: 300,
             useNativeDriver: true
         }).start()
@@ -54,7 +52,7 @@ function BottomNav() {
 
     const moveTocarte = () => {
         Animated.timing(indicator, {
-            toValue: 104,
+            toValue: 125,
             duration: 300,
             useNativeDriver: true
         }).start()
@@ -86,7 +84,7 @@ function BottomNav() {
 
     const moveToFavourites = () => {
         Animated.timing(indicator, {
-            toValue: 175,
+            toValue: 214.3,
             duration: 300,
             useNativeDriver: true
         }).start()
@@ -118,7 +116,7 @@ function BottomNav() {
 
     const moveToProfile = () => {
         Animated.timing(indicator, {
-            toValue: 240,
+            toValue: 298,
             duration: 300,
             useNativeDriver: true
         }).start()
@@ -149,40 +147,39 @@ function BottomNav() {
     };
 
     return(
-        <View style={[styles.bottomNav, {height: height / 10}]}>
-            <TouchableOpacity onPress={moveToHome}>
-                <Animated.View style={{transform: [{translateY: home}]}}>
-                    <AntDesign name="home" size={30} color="black" />
-                </Animated.View>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={moveTocarte}>
-                <Animated.View style={{transform: [{translateY: carte}]}}>
-                    <Feather name="shopping-bag" size={30} color="black" />
-                </Animated.View>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={moveToFavourites}>
-                <Animated.View style={{transform: [{translateY: favourites}]}}>
-                    <MaterialCommunityIcons name="cards-heart-outline" size={30} color="black" />
-                </Animated.View>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={moveToProfile}>
-                <Animated.View style={{transform: [{translateY: profile}]}}>
-                    <Octicons name="person" size={30} color="black" />
-                </Animated.View>
-            </TouchableOpacity>
+        <View style={[styles.bottomNavContainer, {height: height / 10}]}>
+            <View style={styles.bottomNav}>
+                <TouchableOpacity onPress={moveToHome}>
+                    <Animated.View style={{transform: [{translateY: home}]}}>
+                        <AntDesign name="home" size={30} color="black" />
+                    </Animated.View>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={moveTocarte}>
+                    <Animated.View style={{transform: [{translateY: carte}]}}>
+                        <Feather name="shopping-bag" size={30} color="black" />
+                    </Animated.View>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={moveToFavourites}>
+                    <Animated.View style={{transform: [{translateY: favourites}]}}>
+                        <MaterialCommunityIcons name="cards-heart-outline" size={30} color="black" />
+                    </Animated.View>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={moveToProfile}>
+                    <Animated.View style={{transform: [{translateY: profile}]}}>
+                        <Octicons name="person" size={30} color="black" />
+                    </Animated.View>
+                </TouchableOpacity>
 
-            <View style={[styles.bar, {height: height / 100}]}>
-                <Animated.View style={[styles.indicator, {width: width / 20}, {transform: [{translateX: indicator}]}]}></Animated.View>
+                <View style={[styles.bar, {height: height / 100}]}>
+                    <Animated.View style={[styles.indicator, {width: width / 20}, {transform: [{translateX: indicator}]}]}></Animated.View>
+                </View>
             </View>
         </View>
     )
 };
 
 const styles = StyleSheet.create({
-    bottomNav: {
-        width: 300,
-        borderWidth: 2,
-        borderRadius: 25,
+    bottomNavContainer: {
         position: 'absolute',
         bottom: 5,
         left: 20,
@@ -190,13 +187,18 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         elevation: 50,
         shadowColor: 'rgb(197, 41, 155)',
+        alignItems: 'center',
+        borderRadius: 25
+    },
+    bottomNav: {
+        width: 350,
+        flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
         paddingHorizontal: 30
     },
     bar: {
-        borderWidth: 2,
         position: 'absolute',
         left: 0,
         right: 0,
