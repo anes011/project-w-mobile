@@ -145,10 +145,11 @@ const styles = StyleSheet.create({
     price: {
         fontSize: 25,
         color: '#fff',
-        fontWeight: '500'
+        fontFamily: 'Poppins-Medium'
     },
     locationDetails: {
-        color: '#fff'
+        color: '#fff',
+        fontFamily: 'Poppins-Regular'
     },
     type: {
         position: 'absolute',
@@ -159,8 +160,8 @@ const styles = StyleSheet.create({
         paddingVertical: 5,
         paddingHorizontal: 15,
         borderRadius: 20,
-        fontWeight: '700',
-        fontSize: 15
+        fontSize: 15,
+        fontFamily: 'Poppins-Medium'
     },
     rate: {
         position: 'absolute',
@@ -177,7 +178,7 @@ const styles = StyleSheet.create({
     rateText: {
         color: '#fff',
         fontSize: 15,
-        fontWeight: '700'
+        fontFamily: 'Poppins-Medium'
     }
 });
 
