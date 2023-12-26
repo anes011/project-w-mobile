@@ -3,8 +3,11 @@ import { AntDesign } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Octicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 function BottomNav() {
+
+    const navigation = useNavigation();
 
     const { width, height } = Dimensions.get('window');
 
@@ -115,6 +118,7 @@ function BottomNav() {
     };
 
     const moveToProfile = () => {
+        navigation.navigate('Profile');
         Animated.timing(indicator, {
             toValue: 298,
             duration: 300,

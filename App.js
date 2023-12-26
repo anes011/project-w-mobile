@@ -3,11 +3,11 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { StyleSheet, View, StatusBar } from "react-native";
 import HomePage from "./pages/HomePage";
 import OfferPage from "./pages/OfferPage";
+import ProfilePage from "./pages/ProfilePage";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { useCallback, useState } from "react";
 import data from "./Context";
-import TestPage from "./pages/TestPage";
 
 export default function App() {
   const [offerImageFullScreen, setOfferImageFullScreen] = useState(false);
@@ -48,7 +48,7 @@ export default function App() {
           >
             <Stack.Screen name="Home" component={HomePage} />
             <Stack.Screen name="Offer" component={OfferPage} />
-            <Stack.Screen name="Test" component={TestPage} />
+            <Stack.Screen name="Profile" component={ProfilePage} />
           </Stack.Navigator>
         </NavigationContainer>
       </data.Provider>
