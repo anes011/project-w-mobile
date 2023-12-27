@@ -8,6 +8,8 @@ import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { useCallback, useState } from "react";
 import data from "./Context";
+import MyOffersPage from "./pages/MyOffersPage";
+import AcceptedReservationsPage from "./pages/AcceptedReservationsPage";
 
 export default function App() {
   const [offerImageFullScreen, setOfferImageFullScreen] = useState(false);
@@ -49,6 +51,8 @@ export default function App() {
             <Stack.Screen name="Home" component={HomePage} />
             <Stack.Screen name="Offer" component={OfferPage} />
             <Stack.Screen name="Profile" component={ProfilePage} />
+            <Stack.Screen name='Myoffers' component={MyOffersPage} />
+            <Stack.Screen name='AcceptedReservations' component={AcceptedReservationsPage} />
           </Stack.Navigator>
         </NavigationContainer>
       </data.Provider>

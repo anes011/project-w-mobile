@@ -22,6 +22,7 @@ function BottomNav() {
     const profile = new Animated.Value(0);
 
     const moveToHome = () => {
+        navigation.navigate('Home');
         Animated.timing(indicator, {
             toValue: 36,
             duration: 300,

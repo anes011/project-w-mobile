@@ -1,12 +1,14 @@
 import { View, Text, StyleSheet } from 'react-native';
 import ProfileTopSection from '../component/ProfileTopSection';
 import ProfileOptions from '../component/ProfileOptions';
+import BottomNav from '../component/BottomNav';
 
 function ProfilePage() {
     return(
         <View style={styles.profilePage}>
             <ProfileTopSection />
             <ProfileOptions />
+            <BottomNav />
         </View>
     )
 };
