@@ -1,5 +1,4 @@
-import { View, Text, Dimensions, FlatList } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { View, Text, Dimensions, FlatList, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
@@ -20,7 +19,8 @@ function ProfileOptions() {
         btnTitle: 'Accepted Reservations',
         arrowName: 'keyboard-arrow-right',
         arrowSize: 24,
-        arrowColor: '#000'
+        arrowColor: '#000',
+        page: 'AcceptedReservations'
     },
     {
         id: '2',
@@ -30,7 +30,8 @@ function ProfileOptions() {
         btnTitle: 'My offers',
         arrowName: 'keyboard-arrow-right',
         arrowSize: 24,
-        arrowColor: '#000'
+        arrowColor: '#000',
+        page: 'Myoffers'
     },
     {
         id: '3',
@@ -40,7 +41,8 @@ function ProfileOptions() {
         btnTitle: 'Received Reservations',
         arrowName: 'keyboard-arrow-right',
         arrowSize: 24,
-        arrowColor: '#000'
+        arrowColor: '#000',
+        page: 'ReceivedReservations'
     },
     {
         id: '4',
@@ -50,12 +52,13 @@ function ProfileOptions() {
         btnTitle: 'LOG OUT',
         arrowName: 'keyboard-arrow-right',
         arrowSize: 24,
-        arrowColor: '#000'
+        arrowColor: '#000',
+        page: 'LOG OUT'
     }];
 
     return(
         <FlatList style={{marginTop: 30}} data={data} keyExtractor={item => item.id} renderItem={({item}) => (
-            <TouchableOpacity onPress={() => navigation.navigate('AcceptedReservations')} style={[{flexDirection: 'row'}, {alignItems: 'center'}, {justifyContent: 'space-between'}, {backgroundColor: '#fff'}, {paddingHorizontal: 20}, {height: height / 10}, {marginBottom: 10}]}>
+            <TouchableOpacity onPress={() => navigation.navigate(item.page)} style={[{flexDirection: 'row'}, {alignItems: 'center'}, {justifyContent: 'space-between'}, {backgroundColor: '#fff'}, {paddingHorizontal: 20}, {height: height / 10}, {marginBottom: 10}]}>
                 <View style={[{flexDirection: 'row'}, {alignItems: 'center'}, {gap: 20}]}>
                     <Ionicons name={item.iconName} size={item.iconSize} color={item.iconColor} />
                     <Text style={{fontFamily: 'Poppins-Medium'}}>{item.btnTitle}</Text>

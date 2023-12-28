@@ -34,7 +34,7 @@ function MyOffers() {
                 </View>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={goToOffer} style={[styles.offer, {height: height / 1.7}]}>
+            <TouchableOpacity style={[styles.offer, {height: height / 1.7}]}>
                 <Image style={{flex: 1}} source={{uri: 'https://cdn.onekindesign.com/wp-content/uploads/2019/11/Striking-Modern-Villa-Design-Marmol-Radziner-02-1-Kindesign.jpg'}} />
                 <BlurView intensity={80} tint='dark' style={[styles.description, {height: height / 6}]}>
                     <Text style={styles.price}>$100,000</Text>
@@ -47,7 +47,7 @@ function MyOffers() {
                 </View>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={goToOffer} style={[styles.offer, {height: height / 1.7}]}>
+            <TouchableOpacity style={[styles.offer, {height: height / 1.7}]}>
                 <Image style={{flex: 1}} source={{uri: 'https://cdn.onekindesign.com/wp-content/uploads/2019/11/Striking-Modern-Villa-Design-Marmol-Radziner-02-1-Kindesign.jpg'}} />
                 <BlurView intensity={80} tint='dark' style={[styles.description, {height: height / 6}]}>
                     <Text style={styles.price}>$100,000</Text>

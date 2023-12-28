@@ -1,20 +1,28 @@
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Dimensions } from 'react-native';
 import data from '../Context';
 import { useContext } from 'react';
 import OfferSlider from '../component/OfferSlider';
 import OfferDetails from '../component/OfferDetails';
 import OfferHost from '../component/OfferHost';
+import BottomNav from '../component/BottomNav';
 
 function OfferPage() {
 
     const {offerImageFullScreen, setOfferImageFullScreen} = useContext(data);
 
+    const { width, height } = Dimensions.get('window');
+
     return(
-        <ScrollView scrollEnabled={offerImageFullScreen ? false : true} style={offerImageFullScreen ? styles.offerPageActive : styles.offerPage}>
-            <OfferSlider />
-            <OfferDetails />
-            <OfferHost />
-        </ScrollView>
+        <View style={{flex: 1}}>
+            <View style={{height: height / 1.20}}>
+                <ScrollView scrollEnabled={offerImageFullScreen ? false : true} style={offerImageFullScreen ? styles.offerPageActive : styles.offerPage}>
+                    <OfferSlider />
+                    <OfferDetails />
+                    <OfferHost />
+                </ScrollView>
+            </View>
+            <BottomNav />
+        </View>
     )
 };
 

@@ -1,6 +1,4 @@
-import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-import { StyleSheet, View, StatusBar } from "react-native";
+import { StyleSheet, View, StatusBar, Text } from "react-native";
 import HomePage from "./pages/HomePage";
 import OfferPage from "./pages/OfferPage";
 import ProfilePage from "./pages/ProfilePage";
@@ -10,11 +8,13 @@ import { useCallback, useState } from "react";
 import data from "./Context";
 import MyOffersPage from "./pages/MyOffersPage";
 import AcceptedReservationsPage from "./pages/AcceptedReservationsPage";
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import SettingsPage from './pages/SettingsPage';
 
 export default function App() {
+  
   const [offerImageFullScreen, setOfferImageFullScreen] = useState(false);
-
-  const Stack = createStackNavigator();
 
   SplashScreen.preventAutoHideAsync();
 
@@ -36,23 +36,25 @@ export default function App() {
     return null;
   }
 
+  const Stack = createNativeStackNavigator();
+
   return (
     <View style={styles.app} onLayout={onLayoutRootView}>
+      <StatusBar style="auto" />
       <data.Provider value={{ offerImageFullScreen, setOfferImageFullScreen }}>
         <NavigationContainer>
-          <StatusBar style="auto" />
-          <Stack.Navigator
-            initialRouteName="Home"
-            screenOptions={{
-              headerShown: false,
-              cardStyle: { backgroundColor: "white" },
-            }}
-          >
+          <Stack.Navigator initialRouteName="Home" screenOptions={{
+            contentStyle: {backgroundColor: '#fff'},
+            headerTransparent: true,
+            headerBackVisible: false,
+            headerTitleStyle: {color: 'rgba(255, 255, 255, 0)'}
+          }}>
             <Stack.Screen name="Home" component={HomePage} />
-            <Stack.Screen name="Offer" component={OfferPage} />
             <Stack.Screen name="Profile" component={ProfilePage} />
-            <Stack.Screen name='Myoffers' component={MyOffersPage} />
-            <Stack.Screen name='AcceptedReservations' component={AcceptedReservationsPage} />
+            <Stack.Screen name="Offer" component={OfferPage} />
+            <Stack.Screen name="Myoffers" component={MyOffersPage} />
+            <Stack.Screen name="AcceptedReservations" component={AcceptedReservationsPage} />
+            <Stack.Screen name="Settings" component={SettingsPage} />
           </Stack.Navigator>
         </NavigationContainer>
       </data.Provider>
