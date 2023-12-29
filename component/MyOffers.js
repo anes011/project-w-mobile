@@ -16,7 +16,7 @@ function MyOffers() {
 
     return(
         <ScrollView style={[{paddingHorizontal: 20}, {paddingTop: 30}]}>
-            <TouchableOpacity style={[{flexDirection: 'row'}, {position: 'absolute'}, {top: 0}, {left: 0}, {right: 0}, {alignItems: 'center'}, {justifyContent: 'center'}, {height: height / 15}, {borderRadius: 30}, {gap: 10}, {backgroundColor: 'rgb(197, 41, 155)'}]}>
+            <TouchableOpacity onPress={() => navigation.navigate('AddOffer')} style={[{flexDirection: 'row'}, {position: 'absolute'}, {top: 0}, {left: 0}, {right: 0}, {alignItems: 'center'}, {justifyContent: 'center'}, {height: height / 15}, {borderRadius: 30}, {gap: 10}, {backgroundColor: 'rgb(197, 41, 155)'}]}>
                 <Ionicons name="add-circle-sharp" size={24} color="#fff" />
                 <Text style={[{fontFamily: 'Poppins-Medium'}, {color: '#fff'}]}>Add an Offer</Text>
             </TouchableOpacity>
