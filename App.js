@@ -12,6 +12,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import SettingsPage from './pages/SettingsPage';
 import AddOfferPage from './pages/AddOfferPage';
+import SuccessPage from "./pages/SuccessPage";
 
 export default function App() {
   
@@ -57,6 +58,7 @@ export default function App() {
             <Stack.Screen name="AcceptedReservations" component={AcceptedReservationsPage} />
             <Stack.Screen name="Settings" component={SettingsPage} />
             <Stack.Screen name="AddOffer" component={AddOfferPage} />
+            <Stack.Screen name="Success" component={SuccessPage} />
           </Stack.Navigator>
         </NavigationContainer>
       </data.Provider>

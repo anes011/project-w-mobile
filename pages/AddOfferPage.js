@@ -1,4 +1,4 @@
-import { View, Text, Pressable, Dimensions } from 'react-native';
+import { View, Text, Pressable, Dimensions, Alert } from 'react-native';
 import ProgressBox from '../component/ProgressBox';
 import { Entypo } from '@expo/vector-icons';
 import BottomNav from '../component/BottomNav';
@@ -12,8 +12,12 @@ import Step6 from '../component/Step6';
 import Step7 from '../component/Step7';
 import Step8 from '../component/Step8';
 import Step9 from '../component/Step9';
+import Step10 from '../component/Step10';
+import { useNavigation } from '@react-navigation/native';
 
 function AddOfferPage() {
+
+    const navigation = useNavigation();
 
     const { width, height } = Dimensions.get('window');
 
@@ -28,7 +32,12 @@ function AddOfferPage() {
     };
 
     const increment = () => {
-        setCount(count + 1);
+        if (count >= 9) {
+            navigation.navigate('Success');
+            return;
+        } else {
+            setCount(count + 1);
+        }
     }
 
     return(
@@ -36,15 +45,16 @@ function AddOfferPage() {
             <ProgressBox />
 
             <View style={{height: height / 3.8}}>
-                {/* <Step1 /> */}
-                {/* <Step2 /> */}
-                {/* <Step3 /> */}
-                {/* <Step4 /> */}
-                {/* <Step5 /> */}
-                {/* <Step6 /> */}
-                {/* <Step7 /> */}
-                {/* <Step8 /> */}
-                <Step9 />
+                {count === 0 && (<Step1 />)}
+                {count === 1 && (<Step2 />)}
+                {count === 2 && (<Step3 />)}
+                {count === 3 && (<Step4 />)}
+                {count === 4 && (<Step5 />)}
+                {count === 5 && (<Step6 />)}
+                {count === 6 && (<Step7 />)}
+                {count === 7 && (<Step8 />)}
+                {count === 8 && (<Step9 />)}
+                {count === 9 && (<Step10 />)}
             </View>
 
             <View style={[{flexDirection: 'row'}, {justifyContent: 'center'}, {gap: 200}]}>
