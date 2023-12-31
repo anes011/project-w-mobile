@@ -2,7 +2,6 @@ import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import { Octicons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import MapView, { Marker } from 'react-native-maps';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -12,19 +11,12 @@ function OfferDetails() {
 
     const { width, height } = Dimensions.get('window');
 
-    const location = {
-        latitude: 37.78825,
-        longitude: -122.4324,
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421
-    }
-
     return(
-        <View style={styles.details}>
+        <View style={[{marginTop: 20}]}>
             <View style={styles.amenitiesPart1}>
                 <View style={styles.amenitiesPart1CardContainer}>
                     <View style={styles.amenitiesPart1Card}>
-                        <Octicons name="people" size={24} color="#fff" />
+                        <Octicons name="people" size={24} color="#000" />
                     </View>
                     <View style={styles.amenitiesPart1Text}>
                         <Text style={styles.amenitiesPart1Title}>Guests</Text>
@@ -33,7 +25,7 @@ function OfferDetails() {
                 </View>
                 <View style={styles.amenitiesPart1CardContainer}>
                     <View style={styles.amenitiesPart1Card}>
-                        <Ionicons name="bed-outline" size={24} color="#fff" />
+                        <Ionicons name="bed-outline" size={24} color="#000" />
                     </View>
                     <View style={styles.amenitiesPart1Text}>
                         <Text style={styles.amenitiesPart1Title}>Bedrooms</Text>
@@ -42,7 +34,7 @@ function OfferDetails() {
                 </View>
                 <View style={styles.amenitiesPart1CardContainer}>
                     <View style={styles.amenitiesPart1Card}>
-                        <MaterialCommunityIcons name="bed-outline" size={24} color="#fff" />
+                        <MaterialCommunityIcons name="bed-outline" size={24} color="#000" />
                     </View>
                     <View style={styles.amenitiesPart1Text}>
                         <Text style={styles.amenitiesPart1Title}>Beds</Text>
@@ -51,7 +43,7 @@ function OfferDetails() {
                 </View>
                 <View style={styles.amenitiesPart1CardContainer}>
                     <View style={styles.amenitiesPart1Card}>
-                        <MaterialCommunityIcons name="bathtub-outline" size={24} color="#fff" />
+                        <MaterialCommunityIcons name="bathtub-outline" size={24} color="#000" />
                     </View>
                     <View style={styles.amenitiesPart1Text}>
                         <Text style={styles.amenitiesPart1Title}>Bathrooms</Text>
@@ -60,17 +52,11 @@ function OfferDetails() {
                 </View>
             </View>
 
-            <View style={[{height: height / 3}, {borderRadius: 20}, {overflow: 'hidden'}]}>
-                <MapView region={location} style={{flex: 1}}>
-                    <Marker coordinate={location} />
-                </MapView>
-            </View>
-
             <Text style={styles.title}>This is a title!</Text>
 
             <View style={styles.spaceGivenContainer}>
                 <View style={styles.spaceGivenCard}>
-                    <FontAwesome5 name="ruler" size={24} color="#fff" />
+                    <FontAwesome5 name="ruler" size={24} color="#000" />
                 </View>
                 <View>
                     <Text style={styles.spaceGivenTitle}>Space given:</Text>
@@ -80,35 +66,35 @@ function OfferDetails() {
 
             <View style={styles.amenitiesPart2}>
                 <View style={styles.amenitiesPart2Card}>
-                    <AntDesign name="wifi" size={24} color="#fff" />
+                    <AntDesign name="wifi" size={24} color="#000" />
                 </View>
 
                 <View style={styles.amenitiesPart2Card}>
-                    <Ionicons name="tv-outline" size={24} color="#fff" />
+                    <Ionicons name="tv-outline" size={24} color="#000" />
                 </View>
 
                 <View style={styles.amenitiesPart2Card}>
-                    <MaterialCommunityIcons name="washing-machine" size={24} color="#fff" />
+                    <MaterialCommunityIcons name="washing-machine" size={24} color="#000" />
                 </View>
 
                 <View style={styles.amenitiesPart2Card}>
-                    <MaterialIcons name="local-parking" size={24} color="#fff" />
+                    <MaterialIcons name="local-parking" size={24} color="#000" />
                 </View>
 
                 <View style={styles.amenitiesPart2Card}>
-                    <FontAwesome name="snowflake-o" size={24} color="#fff" />
+                    <FontAwesome name="snowflake-o" size={24} color="#000" />
                 </View>
 
                 <View style={styles.amenitiesPart2Card}>
-                    <FontAwesome5 name="swimming-pool" size={24} color="#fff" />
+                    <FontAwesome5 name="swimming-pool" size={24} color="#000" />
                 </View>
 
                 <View style={styles.amenitiesPart2Card}>
-                    <FontAwesome5 name="first-aid" size={24} color="#fff" />
+                    <FontAwesome5 name="first-aid" size={24} color="#000" />
                 </View>
 
                 <View style={styles.amenitiesPart2Card}>
-                    <FontAwesome name="fire-extinguisher" size={24} color="#fff" />
+                    <FontAwesome name="fire-extinguisher" size={24} color="#000" />
                 </View>
             </View>
 
@@ -116,7 +102,7 @@ function OfferDetails() {
 
             <View style={styles.date}>
                 <View style={styles.dateCard}>
-                    <AntDesign name="calendar" size={24} color="#fff" />
+                    <AntDesign name="calendar" size={24} color="#000" />
                 </View>
 
                 <View>
@@ -134,9 +120,6 @@ function OfferDetails() {
 };
 
 const styles = StyleSheet.create({
-    details: {
-        marginTop: 25
-    },
     amenitiesPart1: {
         flexDirection: 'row',
         flexWrap: 'wrap',
@@ -149,7 +132,7 @@ const styles = StyleSheet.create({
         marginBottom: 10
     },
     amenitiesPart1Card: {
-        backgroundColor: 'rgb(197, 41, 155)',
+        backgroundColor: '#fff',
         width: 75,
         height: 75,
         borderRadius: 20,
@@ -162,15 +145,18 @@ const styles = StyleSheet.create({
     },
     amenitiesPart1Title: {
         color: 'gray',
-        fontFamily: 'Poppins-Regular'
+        fontFamily: 'Poppins-Regular',
+        color: '#fff'
     },
     amenitiesPart1Number: {
-        fontFamily: 'Poppins-Bold'
+        fontFamily: 'Poppins-Bold',
+        color: '#fff'
     },
     title: {
         marginTop: 10,
         paddingBottom: 10,
-        fontFamily: 'Poppins-Regular'
+        fontFamily: 'Poppins-Regular',
+        color: '#fff'
     },
     spaceGivenContainer: {
         marginTop: 10,
@@ -180,7 +166,7 @@ const styles = StyleSheet.create({
         gap: 30
     },
     spaceGivenCard: {
-        backgroundColor: 'rgb(197, 41, 155)',
+        backgroundColor: '#fff',
         width: 75,
         height: 75,
         borderRadius: 20,
@@ -189,11 +175,13 @@ const styles = StyleSheet.create({
     },
     spaceGivenTitle: {
         marginBottom: 10,
-        fontFamily: 'Poppins-Bold'
+        fontFamily: 'Poppins-Bold',
+        color: '#fff'
     },
     spaceGivenText: {
         color: 'gray',
-        fontFamily: 'Poppins-Regular'
+        fontFamily: 'Poppins-Regular',
+        color: '#fff'
     },
     amenitiesPart2: {
         marginTop: 10,
@@ -203,7 +191,7 @@ const styles = StyleSheet.create({
         gap: 10
     },
     amenitiesPart2Card: {
-        backgroundColor: 'rgb(197, 41, 155)',
+        backgroundColor: '#fff',
         width: 75,
         height: 75,
         borderRadius: 20,
@@ -213,7 +201,8 @@ const styles = StyleSheet.create({
     description: {
         marginTop: 10,
         paddingBottom: 10,
-        fontFamily: 'Poppins-Regular'
+        fontFamily: 'Poppins-Regular',
+        color: '#fff'
     },
     date: {
         marginTop: 10,
@@ -223,7 +212,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     dateCard: {
-        backgroundColor: 'rgb(197, 41, 155)',
+        backgroundColor: '#fff',
         width: 75,
         height: 75,
         borderRadius: 20,
@@ -232,11 +221,13 @@ const styles = StyleSheet.create({
     },
     dateTitle: {
         marginBottom: 10,
-        fontFamily: 'Poppins-Bold'
+        fontFamily: 'Poppins-Bold',
+        color: '#fff'
     },
     dateText: {
         color: 'gray',
-        fontFamily: 'Poppins-Regular'
+        fontFamily: 'Poppins-Regular',
+        color: '#fff'
     },
 });
 

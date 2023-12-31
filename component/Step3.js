@@ -2,6 +2,7 @@ import { View, Text, TextInput, Dimensions, FlatList, Pressable } from 'react-na
 import { Ionicons } from '@expo/vector-icons';
 import { useState } from 'react';
 import MapView, { Marker } from 'react-native-maps';
+import CustomMapStyle from '../CustomMapStyle';
 
 const Step3 = () => {
 
@@ -59,10 +60,10 @@ const Step3 = () => {
       {
         showMap ? (
           <View style={[{flex: 1}, {borderRadius: 20}, {overflow: 'hidden'}]}>
-            <MapView region={region} style={[{flex: 1}]}>
+            <MapView customMapStyle={CustomMapStyle} region={region} style={[{flex: 1}]}>
               {
                 locationName !== null && (
-                  <Marker coordinate={region} title={locationName} />
+                  <Marker coordinate={region} title={locationName} pinColor='rgb(197, 41, 155)' />
                 )
               }
             </MapView>

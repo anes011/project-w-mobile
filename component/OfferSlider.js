@@ -1,6 +1,4 @@
 import { View, Text, Image, StyleSheet, Dimensions, ScrollView, TouchableOpacity } from 'react-native';
-import data from '../Context';
-import { useContext } from 'react';
 import { BlurView } from 'expo-blur';
 import { FontAwesome } from '@expo/vector-icons';
 import { Fontisto } from '@expo/vector-icons';
@@ -11,10 +9,8 @@ function OfferSlider() {
 
     const { width, height } = Dimensions.get('window');
 
-    const {offerImageFullScreen, setOfferImageFullScreen} = useContext(data);
-
     return(
-        <View style={[offerImageFullScreen ? styles.sliderContainerActive : styles.sliderContainer, offerImageFullScreen ? {height: height} : {height: height / 2}]}>
+        <View style={[styles.sliderContainer, {height: height / 3}]}>
             <ScrollView horizontal>
                 <Image style={{width: width}} source={{uri: 'https://cdn.onekindesign.com/wp-content/uploads/2019/11/Striking-Modern-Villa-Design-Marmol-Radziner-02-1-Kindesign.jpg'}} />
                 <Image style={{width: width}} source={{uri: 'https://cdn.onekindesign.com/wp-content/uploads/2019/11/Striking-Modern-Villa-Design-Marmol-Radziner-02-1-Kindesign.jpg'}} />
@@ -22,7 +18,7 @@ function OfferSlider() {
                 <Image style={{width: width}} source={{uri: 'https://cdn.onekindesign.com/wp-content/uploads/2019/11/Striking-Modern-Villa-Design-Marmol-Radziner-02-1-Kindesign.jpg'}} />
             </ScrollView>
 
-            <BlurView intensity={80} tint='dark' style={[styles.offerInfo, {height: height / 5.5}]}>
+            <BlurView intensity={80} tint='dark' style={[styles.offerInfo, {height: height / 8}]}>
                 <View style={styles.priceRate}>
                     <Text style={styles.priceText}>$100,000</Text>
                     <View style={styles.rateFavourite}>
@@ -41,8 +37,8 @@ function OfferSlider() {
                         <Text style={styles.typeText}>House</Text>
                         <Entypo name="dot-single" size={24} color="#fff" />
                     </View>
-                    <TouchableOpacity onPress={() => setOfferImageFullScreen(!offerImageFullScreen)}>
-                        <MaterialIcons name={offerImageFullScreen ? 'fullscreen-exit' : 'fullscreen'} size={30} color="#fff" />
+                    <TouchableOpacity>
+                        <MaterialIcons name='fullscreen' size={30} color="#fff" />
                     </TouchableOpacity>
                 </View>
             </BlurView>
@@ -54,7 +50,8 @@ const styles = StyleSheet.create({
     sliderContainer: {
         borderRadius: 30,
         overflow: 'hidden',
-        position: 'relative'
+        position: 'relative',
+        marginTop: 20
     },
     sliderContainerActive: {
         overflow: 'hidden',

@@ -42,7 +42,7 @@ function ProfileOptions() {
         arrowName: 'keyboard-arrow-right',
         arrowSize: 24,
         arrowColor: '#000',
-        page: 'ReceivedReservations'
+        page: 'Received'
     },
     {
         id: '4',

@@ -31,21 +31,15 @@ function Nav() {
       </View>
 
       <View style={styles.search}>
-        <TouchableOpacity
-          onPress={() => setShowPlaceholder(false)}
-          style={styles.searchContainer}
-        >
+        <View style={styles.searchContainer}>
           <Feather
             style={styles.searchIcon}
             name="search"
             size={24}
             color="black"
           />
-          <TextInput style={styles.searchInput} />
-          {showPlaceholder && (
-            <Text style={styles.placeHolder}>Address, city...</Text>
-          )}
-        </TouchableOpacity>
+          <TextInput style={styles.searchInput} placeholder="Search..." />
+        </View>
         <TouchableOpacity style={[styles.filterBtn, { height: height / 14 }]}>
           <Feather name="sliders" size={27} color="white" />
         </TouchableOpacity>
@@ -89,7 +83,6 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   searchContainer: {
-    position: "relative",
     flex: 2.9,
     borderRadius: 20,
     overflow: "hidden",
@@ -98,20 +91,14 @@ const styles = StyleSheet.create({
     elevation: 50,
   },
   searchInput: {
-    paddingLeft: 40,
+    paddingLeft: 50,
     fontSize: 17,
     flex: 1,
+    fontFamily: 'Poppins-Medium'
   },
   searchIcon: {
     position: "absolute",
     left: 8,
-  },
-  placeHolder: {
-    position: "absolute",
-    left: 70,
-    fontSize: 17,
-    color: "gray",
-    fontFamily: "Poppins-Regular",
   },
   filterBtn: {
     backgroundColor: "rgb(197, 41, 155)",

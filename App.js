@@ -13,6 +13,8 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import SettingsPage from './pages/SettingsPage';
 import AddOfferPage from './pages/AddOfferPage';
 import SuccessPage from "./pages/SuccessPage";
+import ReceivedReservationsPage from "./pages/ReceivedReservationsPage";
+import CartePage from './pages/CartePage';
 
 export default function App() {
   
@@ -59,6 +61,8 @@ export default function App() {
             <Stack.Screen name="Settings" component={SettingsPage} />
             <Stack.Screen name="AddOffer" component={AddOfferPage} />
             <Stack.Screen name="Success" component={SuccessPage} />
+            <Stack.Screen name="Received" component={ReceivedReservationsPage} />
+            <Stack.Screen name="Carte" component={CartePage} />
           </Stack.Navigator>
         </NavigationContainer>
       </data.Provider>
