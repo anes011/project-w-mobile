@@ -15,9 +15,9 @@ const OfferMap = () => {
 
   return (
     <View style={[{height: height / 2}, {borderBottomLeftRadius: 50}, {borderBottomRightRadius: 50}, {overflow: 'hidden'}, {backgroundColor: '#fff'}, {elevation: 50}]}>
-        <MapView customMapStyle={CustomMapStyle} region={location} style={{flex: 1}}>
-            <Marker coordinate={location} title='San Francisco' pinColor='rgb(197, 41, 155)' />
-        </MapView>
+      <MapView region={location} style={{flex: 1}}>
+        <Marker coordinate={location} title='San Francisco' pinColor='rgb(197, 41, 155)' />
+      </MapView>
     </View>
   )
 }

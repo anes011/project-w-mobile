@@ -20,7 +20,7 @@ function BottomNav() {
                 <TouchableOpacity onPress={() => navigation.navigate('Carte')}>
                     <Feather name="shopping-bag" size={30} color="black" />
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate('Favourites')}>
                     <MaterialCommunityIcons name="cards-heart-outline" size={30} color="black" />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => navigation.navigate('Profile')}>

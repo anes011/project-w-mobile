@@ -60,7 +60,7 @@ const Step3 = () => {
       {
         showMap ? (
           <View style={[{flex: 1}, {borderRadius: 20}, {overflow: 'hidden'}]}>
-            <MapView customMapStyle={CustomMapStyle} region={region} style={[{flex: 1}]}>
+            <MapView region={region} style={[{flex: 1}]}>
               {
                 locationName !== null && (
                   <Marker coordinate={region} title={locationName} pinColor='rgb(197, 41, 155)' />

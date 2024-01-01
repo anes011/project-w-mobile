@@ -15,6 +15,7 @@ import AddOfferPage from './pages/AddOfferPage';
 import SuccessPage from "./pages/SuccessPage";
 import ReceivedReservationsPage from "./pages/ReceivedReservationsPage";
 import CartePage from './pages/CartePage';
+import FavouritesPage from './pages/FavouritesPage';
 
 export default function App() {
   
@@ -63,6 +64,7 @@ export default function App() {
             <Stack.Screen name="Success" component={SuccessPage} />
             <Stack.Screen name="Received" component={ReceivedReservationsPage} />
             <Stack.Screen name="Carte" component={CartePage} />
+            <Stack.Screen name="Favourites" component={FavouritesPage} />
           </Stack.Navigator>
         </NavigationContainer>
       </data.Provider>
