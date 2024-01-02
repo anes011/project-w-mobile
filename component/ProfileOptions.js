@@ -53,7 +53,7 @@ function ProfileOptions() {
         arrowName: 'keyboard-arrow-right',
         arrowSize: 24,
         arrowColor: '#000',
-        page: 'Log out'
+        page: 'Sign'
     }];
 
     return(

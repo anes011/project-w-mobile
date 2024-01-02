@@ -16,6 +16,8 @@ import SuccessPage from "./pages/SuccessPage";
 import ReceivedReservationsPage from "./pages/ReceivedReservationsPage";
 import CartePage from './pages/CartePage';
 import FavouritesPage from './pages/FavouritesPage';
+import SigningPage from './pages/SigningPage';
+import LoadingPage from "./pages/LoadingPage";
 
 export default function App() {
   
@@ -48,7 +50,7 @@ export default function App() {
       <StatusBar style="auto" />
       <data.Provider value={{ offerImageFullScreen, setOfferImageFullScreen }}>
         <NavigationContainer>
-          <Stack.Navigator initialRouteName="Home" screenOptions={{
+          <Stack.Navigator initialRouteName="Loading" screenOptions={{
             contentStyle: {backgroundColor: '#fff'},
             headerTransparent: true,
             headerBackVisible: false,
@@ -65,6 +67,8 @@ export default function App() {
             <Stack.Screen name="Received" component={ReceivedReservationsPage} />
             <Stack.Screen name="Carte" component={CartePage} />
             <Stack.Screen name="Favourites" component={FavouritesPage} />
+            <Stack.Screen name="Sign" component={SigningPage} />
+            <Stack.Screen name="Loading" component={LoadingPage} />
           </Stack.Navigator>
         </NavigationContainer>
       </data.Provider>
