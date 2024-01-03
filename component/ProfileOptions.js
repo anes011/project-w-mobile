@@ -11,61 +11,47 @@ function ProfileOptions() {
 
     const { width, height } = Dimensions.get('window');
 
-    const data = [{
-        id: '1',
-        iconName: 'checkmark-done',
-        iconSize: 30,
-        iconColor: 'rgb(197, 41, 155)',
-        btnTitle: 'Accepted Reservations',
-        arrowName: 'keyboard-arrow-right',
-        arrowSize: 24,
-        arrowColor: '#000',
-        page: 'AcceptedReservations'
-    },
-    {
-        id: '2',
-        iconName: 'paper-plane',
-        iconSize: 30,
-        iconColor: 'rgb(197, 41, 155)',
-        btnTitle: 'My offers',
-        arrowName: 'keyboard-arrow-right',
-        arrowSize: 24,
-        arrowColor: '#000',
-        page: 'Myoffers'
-    },
-    {
-        id: '3',
-        iconName: 'receipt-outline',
-        iconSize: 30,
-        iconColor: 'rgb(197, 41, 155)',
-        btnTitle: 'Received Reservations',
-        arrowName: 'keyboard-arrow-right',
-        arrowSize: 24,
-        arrowColor: '#000',
-        page: 'Received'
-    },
-    {
-        id: '4',
-        iconName: 'log-out',
-        iconSize: 30,
-        iconColor: 'rgb(197, 41, 155)',
-        btnTitle: 'LOG OUT',
-        arrowName: 'keyboard-arrow-right',
-        arrowSize: 24,
-        arrowColor: '#000',
-        page: 'Sign'
-    }];
+    const navigateToSign = () => {
+        navigation.reset({
+            index: 0,
+            routes: [{ name: 'Sign' }]
+        });
+    };
 
     return(
-        <FlatList style={{marginTop: 30}} data={data} keyExtractor={item => item.id} renderItem={({item}) => (
-            <TouchableOpacity onPress={() => navigation.navigate(item.page)} style={[{flexDirection: 'row'}, {alignItems: 'center'}, {justifyContent: 'space-between'}, {backgroundColor: '#fff'}, {paddingHorizontal: 20}, {height: height / 10}, {marginBottom: 10}]}>
+        <View style={[{marginTop: 30}]}>
+            <TouchableOpacity onPress={() => navigation.navigate('AcceptedReservations')} style={[{flexDirection: 'row'}, {alignItems: 'center'}, {justifyContent: 'space-between'}, {backgroundColor: '#fff'}, {paddingHorizontal: 20}, {height: height / 10}, {marginBottom: 10}]}>
                 <View style={[{flexDirection: 'row'}, {alignItems: 'center'}, {gap: 20}]}>
-                    <Ionicons name={item.iconName} size={item.iconSize} color={item.iconColor} />
-                    <Text style={{fontFamily: 'Poppins-Medium'}}>{item.btnTitle}</Text>
+                    <Ionicons name='checkmark-done' size={24} color='rgb(197, 41, 155)' />
+                    <Text style={{fontFamily: 'Poppins-Medium'}}>Accepted Reservations</Text>
                 </View>
-                <MaterialIcons name={item.arrowName} size={item.arrowSize} color={item.arrowColor} />
+                <MaterialIcons name='keyboard-arrow-right' size={24} color='#000' />
             </TouchableOpacity>
-        )} />
+
+            <TouchableOpacity onPress={() => navigation.navigate('Myoffers')} style={[{flexDirection: 'row'}, {alignItems: 'center'}, {justifyContent: 'space-between'}, {backgroundColor: '#fff'}, {paddingHorizontal: 20}, {height: height / 10}, {marginBottom: 10}]}>
+                <View style={[{flexDirection: 'row'}, {alignItems: 'center'}, {gap: 20}]}>
+                    <Ionicons name='paper-plane' size={24} color='rgb(197, 41, 155)' />
+                    <Text style={{fontFamily: 'Poppins-Medium'}}>My offers</Text>
+                </View>
+                <MaterialIcons name='keyboard-arrow-right' size={24} color='#000' />
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={() => navigation.navigate('Received')} style={[{flexDirection: 'row'}, {alignItems: 'center'}, {justifyContent: 'space-between'}, {backgroundColor: '#fff'}, {paddingHorizontal: 20}, {height: height / 10}, {marginBottom: 10}]}>
+                <View style={[{flexDirection: 'row'}, {alignItems: 'center'}, {gap: 20}]}>
+                    <Ionicons name='receipt-outline' size={24} color='rgb(197, 41, 155)' />
+                    <Text style={{fontFamily: 'Poppins-Medium'}}>Received Reservations</Text>
+                </View>
+                <MaterialIcons name='keyboard-arrow-right' size={24} color='#000' />
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={navigateToSign} style={[{flexDirection: 'row'}, {alignItems: 'center'}, {justifyContent: 'space-between'}, {backgroundColor: '#fff'}, {paddingHorizontal: 20}, {height: height / 10}, {marginBottom: 10}]}>
+                <View style={[{flexDirection: 'row'}, {alignItems: 'center'}, {gap: 20}]}>
+                    <Ionicons name='log-out' size={24} color='rgb(197, 41, 155)' />
+                    <Text style={{fontFamily: 'Poppins-Medium'}}>LOG OUT</Text>
+                </View>
+                <MaterialIcons name='keyboard-arrow-right' size={24} color='#000' />
+            </TouchableOpacity>
+        </View>
     )
 };
 

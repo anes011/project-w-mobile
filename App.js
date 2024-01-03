@@ -56,6 +56,7 @@ export default function App() {
             headerBackVisible: false,
             headerTitleStyle: {color: 'rgba(255, 255, 255, 0)'}
           }}>
+            <Stack.Screen name="Sign" component={SigningPage} />
             <Stack.Screen name="Home" component={HomePage} />
             <Stack.Screen name="Profile" component={ProfilePage} />
             <Stack.Screen name="Offer" component={OfferPage} />
@@ -67,7 +68,6 @@ export default function App() {
             <Stack.Screen name="Received" component={ReceivedReservationsPage} />
             <Stack.Screen name="Carte" component={CartePage} />
             <Stack.Screen name="Favourites" component={FavouritesPage} />
-            <Stack.Screen name="Sign" component={SigningPage} />
             <Stack.Screen name="Loading" component={LoadingPage} />
           </Stack.Navigator>
         </NavigationContainer>

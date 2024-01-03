@@ -19,7 +19,10 @@ const LoadingPage = () => {
 
     useEffect(() => {
         setTimeout(() => {
-            navigation.navigate('Home');
+            navigation.reset({
+                index: 0,
+                routes: [{ name: 'Sign' }]
+            });
         }, 6000);
     });
 
