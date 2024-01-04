@@ -3,22 +3,18 @@ import { Ionicons } from '@expo/vector-icons';
 import { useState } from 'react';
 import MapView, { Marker } from 'react-native-maps';
 import CustomMapStyle from '../CustomMapStyle';
+import data from '../Context';
+import { useContext } from 'react';
 
 const Step3 = () => {
 
   const {width, height} = Dimensions.get('window');
 
   const [autocompleteData, setAutocompleteData] = useState([]);
-  const [locationName, setLocationName] = useState(null);
   const [showMap, setShowMap] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(false);
 
-  const [region, setRegion] = useState({
-    latitude: 37.7749,
-    longitude: -122.4194,
-    latitudeDelta: 0.0922,
-    longitudeDelta: 0.0421,
-  });
+  const {location, setLocation, locationName, setLocationName} = useContext(data);
 
   const handleAutocomplete = (text) => {
     const autocompleteApi = async () => {
@@ -47,11 +43,11 @@ const Step3 = () => {
     setLocationName(target.display_name);
     setShowMap(true);
 
-    setRegion({
+    setLocation({
       latitude: parseFloat(target.lat),
       longitude: parseFloat(target.lon),
       latitudeDelta: 0.005 * 30,
-      longitudeDelta: 0.005 * 30,
+      longitudeDelta: 0.005 * 30
     });
   };
 
@@ -60,13 +56,13 @@ const Step3 = () => {
       {
         showMap ? (
           <View style={[{flex: 1}, {borderRadius: 20}, {overflow: 'hidden'}]}>
-            <MapView region={region} style={[{flex: 1}]}>
-              {
-                locationName !== null && (
-                  <Marker coordinate={region} title={locationName} pinColor='rgb(197, 41, 155)' />
-                )
-              }
-            </MapView>
+            {
+              location !== null && locationName !== null && (
+                <MapView region={location} style={[{flex: 1}]}>
+                  <Marker coordinate={location} title={locationName} pinColor='rgb(197, 41, 155)' />
+                </MapView>
+              )
+            }
             <Pressable onPress={() => setShowMap(false)} style={[{position: 'absolute'}, {flexDirection: 'row'}, {alignItems: 'center'}, {backgroundColor: '#fff'}, {paddingVertical: 10}, {elevation: 50}, {borderRadius: 50}, {paddingHorizontal: 5}, {bottom: 5}, {left: 5}]}>
               <Ionicons name="ios-chevron-back" size={24} color="black" />
               <Text style={[{color: 'red'}, {fontFamily: 'Poppins-Regular'}]}>Wrong location!</Text>

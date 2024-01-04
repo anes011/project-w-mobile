@@ -1,10 +1,14 @@
-import { View, Text, Image, Dimensions, TextInput, Pressable, Alert } from 'react-native';
+import { View, Text, Image, Dimensions, TextInput, Pressable, Alert, ActivityIndicator } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { CheckBox } from 'react-native-elements';
 import { useEffect, useState } from 'react';
 import * as DocumentPicker from 'expo-document-picker';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
 
 const Signing = () => {
+
+  const navigation = useNavigation();
 
   const { width, height } = Dimensions.get('screen');
 
@@ -19,6 +23,9 @@ const Signing = () => {
   const [passwordSignUp, setPasswordSignUp] = useState(null);
   const [phoneNumber, setPhoneNumber] = useState(null);
   const [profilePhoto, setProfilePhoto] = useState(null);
+
+  const [signInLoading, setSignInLoading] = useState(false);
+  const [signUpLoading, setSignUpLoading] = useState(false);
 
   const pickPhoto = () => {
     const pick = async () => {
@@ -41,10 +48,12 @@ const Signing = () => {
   };
 
   const signIn = () => {
-    if (email !== null && password !== null) {
+    if (emailSignIn !== null && passwordSignIn !== null) {
+      setSignInLoading(true);
+
       const loginApi = async () => {
         try {
-          const response = await fetch('http://192.168.1.2:6000/users/login', {
+          const response = await fetch('http://192.168.1.2:4000/users/login', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
@@ -55,11 +64,27 @@ const Signing = () => {
             })
           });
           const data = await response.json();
-          console.log(data);
           if (data.userInfo) {
-            Alert.alert('Granted!');
+            setSignInLoading(false);
+
+            const saveToAsyncStorage = async () => {
+              try {
+                await AsyncStorage.setItem('userInfo', JSON.stringify(data.userInfo));
+              } catch (err) {
+                console.error(err);
+              }
+            }
+
+            saveToAsyncStorage();
+
+            navigation.reset({
+              index: 0,
+              routes: [{ name: 'Home' }]
+            });
+
           } else {
             Alert.alert('Oops, somthing went wrong. Please re-check your credentials');
+            setSignInLoading(false);
           }
         } catch (err) {
           console.error(err);
@@ -72,37 +97,62 @@ const Signing = () => {
     }
   };
 
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const passwordRegex = /^.{8,}$/;
+
   const signUp = () => {
     if (fullName !== null && emailSignUp !== null &&
       passwordSignUp !== null && phoneNumber !== null && checked &&
       profilePhoto !== null) {
-        const file = {
-          uri: profilePhoto.uri,
-          type: profilePhoto.mimeType,
-          name: profilePhoto.name
-        };
-      
-        const formData = new FormData();
-        formData.append('fullName', fullName);
-        formData.append('email', emailSignUp);
-        formData.append('password', passwordSignUp);
-        formData.append('phoneNumber', phoneNumber);
-        formData.append('profilePhoto', file);
-      
-        const createAccountApi = async () => {
-          try {
-            const response = await fetch('http://192.168.1.2:4000/users', {
-              method: 'POST',
-              body: formData
-            });
-            const data = await response.json();
-            console.log(data);
-          } catch (err) {
-            console.error(err);
-          }
-        };
-      
-        createAccountApi();
+        if (emailRegex.test(emailSignUp) && passwordRegex.test(passwordSignUp)) {
+          setSignUpLoading(true);
+
+          const file = {
+            uri: profilePhoto.uri,
+            type: profilePhoto.mimeType,
+            name: profilePhoto.name
+          };
+        
+          const formData = new FormData();
+          formData.append('fullName', fullName);
+          formData.append('email', emailSignUp);
+          formData.append('password', passwordSignUp);
+          formData.append('phoneNumber', phoneNumber);
+          formData.append('profilePhoto', file);
+        
+          const createAccountApi = async () => {
+            try {
+              const response = await fetch('http://192.168.1.2:4000/users', {
+                method: 'POST',
+                body: formData
+              });
+              const data = await response.json();
+              setSignUpLoading(false);
+
+              const asyncStorage = async () => {
+                try {
+                  await AsyncStorage.setItem('userInfo', JSON.stringify(data.user));
+
+                  navigation.reset({
+                    index: 0,
+                    routes: [{ name: 'Home' }]
+                  });
+                } catch (err) {
+                  console.error(err);
+                }
+              };
+
+              asyncStorage();
+            } catch (err) {
+              console.error(err);
+            }
+          };
+        
+          createAccountApi();
+        } else {
+          setSignUpLoading(false);
+          Alert.alert('email must be correct, and password must be at least 8 characters long!');
+        }
       } else {
         Alert.alert('Please fill-in the sign up correctly!');
       }
@@ -117,7 +167,7 @@ const Signing = () => {
             <View style={[{gap: 10}, {marginTop: 30}]}>
               <TextInput onChangeText={(text) => setFullName(text)} style={[{height: height / 14}, {padding: 15}, {fontFamily: 'Poppins-Medium'}, {borderBottomWidth: 3}, {borderColor: 'rgb(197, 41, 155)'}]} placeholder='Full Name...' />
               <TextInput onChangeText={(text) => setEmailSignUp(text)} style={[{height: height / 14}, {padding: 15}, {fontFamily: 'Poppins-Medium'}, {borderBottomWidth: 3}, {borderColor: 'rgb(197, 41, 155)'}]} placeholder='Email...' />
-              <TextInput onChangeText={(text) => setPasswordSignUp(text)} style={[{height: height / 14}, {padding: 15}, {fontFamily: 'Poppins-Medium'}, {borderBottomWidth: 3}, {borderColor: 'rgb(197, 41, 155)'}]} placeholder='Password...' />
+              <TextInput onChangeText={(text) => setPasswordSignUp(text)} style={[{height: height / 14}, {padding: 15}, {fontFamily: 'Poppins-Medium'}, {borderBottomWidth: 3}, {borderColor: 'rgb(197, 41, 155)'}]} placeholder='Password...' secureTextEntry={true} />
               <TextInput onChangeText={(text) => setPhoneNumber(text)} style={[{height: height / 14}, {padding: 15}, {fontFamily: 'Poppins-Medium'}, {borderBottomWidth: 3}, {borderColor: 'rgb(197, 41, 155)'}]} placeholder='Phone Number...' keyboardType='numeric' />
               
               <Pressable onPress={pickPhoto} style={[{flexDirection: 'row'}, {alignItems: 'center'}, {justifyContent: 'center'}, {gap: 20}, {padding: 10}, {borderRadius: 10}, {backgroundColor: '#fff'}, {elevation: 50}]}>
@@ -132,7 +182,13 @@ const Signing = () => {
             </View>
 
             <Pressable onPress={signUp} style={[{padding: 15}, {borderRadius: 50}, {backgroundColor: 'rgb(197, 41, 155)'}, {alignItems: 'center'}]}>
-              <Text style={[{color: '#fff'}, {fontFamily: 'Poppins-Medium'}]}>Sign up</Text>
+              {
+                signUpLoading ? (
+                  <ActivityIndicator color='#fff' size={'large'} />
+                ) : (
+                  <Text style={[{color: '#fff'}, {fontFamily: 'Poppins-Medium'}]}>Sign up</Text>
+                )
+              }
             </Pressable>
 
             <View style={[{flexDirection: 'row'}, {alignItems: 'center'}, {justifyContent: 'center'}, {gap: 20}, {marginTop: 20}]}>
@@ -151,11 +207,17 @@ const Signing = () => {
             <Text style={[{fontFamily: 'Poppins-Bold'}, {fontSize: 20}]}>Sign in</Text>
             <View style={[{gap: 10}, {marginTop: 30}]}>
               <TextInput onChangeText={(text) => setEmailSignIn(text)} style={[{height: height / 14}, {padding: 15}, {fontFamily: 'Poppins-Medium'}, {borderBottomWidth: 3}, {borderColor: 'rgb(197, 41, 155)'}]} placeholder='Email...' />
-              <TextInput onChangeText={(text) => setPasswordSignIn(text)} style={[{height: height / 14}, {padding: 15}, {fontFamily: 'Poppins-Medium'}, {borderBottomWidth: 3}, {borderColor: 'rgb(197, 41, 155)'}]} placeholder='Password...' />
+              <TextInput onChangeText={(text) => setPasswordSignIn(text)} style={[{height: height / 14}, {padding: 15}, {fontFamily: 'Poppins-Medium'}, {borderBottomWidth: 3}, {borderColor: 'rgb(197, 41, 155)'}]} placeholder='Password...' secureTextEntry={true} />
             </View>
 
             <Pressable onPress={signIn} style={[{padding: 15}, {borderRadius: 50}, {backgroundColor: 'rgb(197, 41, 155)'}, {alignItems: 'center'}, {marginTop: 30}]}>
-              <Text style={[{color: '#fff'}, {fontFamily: 'Poppins-Medium'}]}>Sign in</Text>
+              {
+                signInLoading ? (
+                  <ActivityIndicator color='#fff' size={'large'} />
+                ) : (
+                  <Text style={[{color: '#fff'}, {fontFamily: 'Poppins-Medium'}]}>Sign in</Text>
+                )
+              }
             </Pressable>
 
             <View style={[{flexDirection: 'row'}, {alignItems: 'center'}, {justifyContent: 'center'}, {gap: 20}, {marginTop: 20}]}>

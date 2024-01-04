@@ -2,10 +2,12 @@ import { View, Text, Pressable } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useState } from 'react';
+import data from '../Context';
+import { useContext } from 'react';
 
 const Step1 = () => {
 
-    const [placeType, setPlaceType] = useState(null);
+  const {placeType, setPlaceType} = useContext(data);
 
   return (
     <View style={[{flex: 1}, {flexDirection: 'row'}, {justifyContent: 'center'}, {alignItems: 'center'}, {gap: 50}]}>

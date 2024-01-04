@@ -4,6 +4,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function ProfileOptions() {
 
@@ -12,10 +13,20 @@ function ProfileOptions() {
     const { width, height } = Dimensions.get('window');
 
     const navigateToSign = () => {
-        navigation.reset({
-            index: 0,
-            routes: [{ name: 'Sign' }]
-        });
+        const asyncStorage = async () => {
+            try {
+                await AsyncStorage.removeItem('userInfo');
+                
+                navigation.reset({
+                    index: 0,
+                    routes: [{ name: 'Sign' }]
+                });
+            } catch (err) {
+                console.error(err);
+            }
+        };
+
+        asyncStorage();
     };
 
     return(

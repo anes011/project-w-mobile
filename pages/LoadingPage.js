@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { View, Text, Image, Animated } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const LoadingPage = () => {
 
@@ -18,12 +19,30 @@ const LoadingPage = () => {
     });
 
     useEffect(() => {
-        setTimeout(() => {
-            navigation.reset({
-                index: 0,
-                routes: [{ name: 'Sign' }]
-            });
-        }, 6000);
+        const asyncStorage = async () => {
+            try {
+                const response = await AsyncStorage.getItem('userInfo');
+                if (response !== null) {
+                    setTimeout(() => {
+                        navigation.reset({
+                            index: 0,
+                            routes: [{ name: 'Home' }]
+                        });
+                    }, 6000);
+                } else {
+                    setTimeout(() => {
+                        navigation.reset({
+                            index: 0,
+                            routes: [{ name: 'Sign' }]
+                        });
+                    }, 6000);
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        };
+
+        asyncStorage();
     });
 
   return (

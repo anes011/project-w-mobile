@@ -1,15 +1,12 @@
 import { StyleSheet, View, StatusBar, Text } from "react-native";
-import HomePage from "./pages/HomePage";
-import OfferPage from "./pages/OfferPage";
-import ProfilePage from "./pages/ProfilePage";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { useCallback, useState } from "react";
 import data from "./Context";
-import MyOffersPage from "./pages/MyOffersPage";
-import AcceptedReservationsPage from "./pages/AcceptedReservationsPage";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
+//imported pages
 import SettingsPage from './pages/SettingsPage';
 import AddOfferPage from './pages/AddOfferPage';
 import SuccessPage from "./pages/SuccessPage";
@@ -18,10 +15,14 @@ import CartePage from './pages/CartePage';
 import FavouritesPage from './pages/FavouritesPage';
 import SigningPage from './pages/SigningPage';
 import LoadingPage from "./pages/LoadingPage";
+import MyOffersPage from "./pages/MyOffersPage";
+import AcceptedReservationsPage from "./pages/AcceptedReservationsPage";
+import HomePage from "./pages/HomePage";
+import OfferPage from "./pages/OfferPage";
+import ProfilePage from "./pages/ProfilePage";
+//end of imported pages
 
 export default function App() {
-  
-  const [offerImageFullScreen, setOfferImageFullScreen] = useState(false);
 
   SplashScreen.preventAutoHideAsync();
 
@@ -39,16 +40,48 @@ export default function App() {
     }
   }, [fontsLoaded]);
 
-  if (!fontsLoaded) {
-    return null;
-  }
+  //States to be transfered to other components with context api
+  const [placeType, setPlaceType] = useState(null);
+  const [spaceGiven, setSpaceGiven] = useState(null);
+  const [location, setLocation] = useState(null);
+  const [locationName, setLocationName] = useState(null);
+  const [guests, setGuests] = useState(0);
+  const [bedrooms, setBedrooms] = useState(0);
+  const [beds, setBeds] = useState(0);
+  const [bathrooms, setBathrooms] = useState(0);
+  const [wifi, setWifi] = useState(false);
+  const [tv, setTv] = useState(false);
+  const [washer, setWasher] = useState(false);
+  const [parking, setParking] = useState(false);
+  const [airConditioning, setAirConditioning] = useState(false);
+  const [pool, setPool] = useState(false);
+  const [firstAid, setFirstAid] = useState(false);
+  const [fireExtinguisher, setFireExtinguisher] = useState(false);
+  const [offerPhotos, setOfferPhotos] = useState(null);
+  const [title, setTitle] = useState(null);
+  const [description, setDescription] = useState(null);
+  const [price, setPrice] = useState(null);
+  const [checkIn, setCheckIn] = useState(null);
+  const [checkOut, setCheckOut] = useState(null);
+  //end of states for context
 
   const Stack = createNativeStackNavigator();
+
+  if (!fontsLoaded) {
+    return null;
+  };
 
   return (
     <View style={styles.app} onLayout={onLayoutRootView}>
       <StatusBar style="auto" />
-      <data.Provider value={{ offerImageFullScreen, setOfferImageFullScreen }}>
+      <data.Provider value={{ placeType, setPlaceType, spaceGiven,
+      setSpaceGiven, location, setLocation, locationName, setLocationName,
+      guests, setGuests, bedrooms, setBedrooms, beds, setBeds, bathrooms, 
+      setBathrooms, wifi, setWifi, tv, setTv, washer, setWasher, parking, 
+      setParking, airConditioning, setAirConditioning, pool, setPool, firstAid,
+      setFirstAid, fireExtinguisher, setFireExtinguisher, offerPhotos,
+      setOfferPhotos, title, setTitle, description, setDescription,
+      price, setPrice, checkIn, setCheckIn, checkOut, setCheckOut }}>
         <NavigationContainer>
           <Stack.Navigator initialRouteName="Loading" screenOptions={{
             contentStyle: {backgroundColor: '#fff'},

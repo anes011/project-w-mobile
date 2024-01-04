@@ -2,7 +2,7 @@ import { View, Text, Pressable, Dimensions, Alert } from 'react-native';
 import ProgressBox from '../component/ProgressBox';
 import { Entypo } from '@expo/vector-icons';
 import BottomNav from '../component/BottomNav';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Step1 from '../component/Step1';
 import Step2 from '../component/Step2';
 import Step3 from '../component/Step3';
@@ -14,6 +14,8 @@ import Step8 from '../component/Step8';
 import Step9 from '../component/Step9';
 import Step10 from '../component/Step10';
 import { useNavigation } from '@react-navigation/native';
+import data from '../Context';
+import { useContext } from 'react';
 
 function AddOfferPage() {
 
@@ -22,6 +24,8 @@ function AddOfferPage() {
     const { width, height } = Dimensions.get('window');
 
     const [count, setCount] = useState(0);
+
+    const {placeType, spaceGiven, location, locationName} = useContext(data);
 
     const decrement = () => {
         if (count <= 0) {
@@ -36,9 +40,26 @@ function AddOfferPage() {
             navigation.navigate('Success');
             return;
         } else {
-            setCount(count + 1);
+            if (count === 0 && placeType === null) {
+                Alert.alert('Please choose one!');
+            } else if (count === 1 && spaceGiven === null) {
+                Alert.alert('Please choose one!');
+            } else if (count === 2 && location === null) {
+                Alert.alert("Enter your house's location!");
+            } else {
+                setCount(count + 1);
+            }
         }
     }
+
+    // useEffect(() => {
+    //     if (count === 0) {
+    //         if (placeType === null) {
+    //             setCount(0);
+    //             Alert.alert('Please choose one!');
+    //         }
+    //     }
+    // });
 
     return(
         <View style={{flex: 1}}>
@@ -58,9 +79,13 @@ function AddOfferPage() {
             </View>
 
             <View style={[{flexDirection: 'row'}, {justifyContent: 'center'}, {gap: 200}]}>
-                <Pressable onPress={decrement} style={[{height: 70}, {width: 70}, {justifyContent: 'center'}, {alignItems: 'center'}, {borderRadius: 100 / 2}, {backgroundColor: '#fff'}, {elevation: 50}]}>
-                    <Entypo name="chevron-small-left" size={27} color="black" />
-                </Pressable>
+                {
+                    count > 0 && (
+                        <Pressable onPress={decrement} style={[{height: 70}, {width: 70}, {justifyContent: 'center'}, {alignItems: 'center'}, {borderRadius: 100 / 2}, {backgroundColor: '#fff'}, {elevation: 50}]}>
+                            <Entypo name="chevron-small-left" size={27} color="black" />
+                        </Pressable>
+                    )
+                }
 
                 <Pressable onPress={increment} style={[{height: 70}, {width: 70}, {justifyContent: 'center'}, {alignItems: 'center'}, {borderRadius: 100 / 2}, {backgroundColor: '#fff'}, {elevation: 50}]}>
                     <Entypo name="chevron-small-right" size={27} color="black" />
