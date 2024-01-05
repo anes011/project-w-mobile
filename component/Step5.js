@@ -4,18 +4,15 @@ import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import data from '../Context';
 
 const Step5 = () => {
 
-    const [wifi, setWifi] = useState(false);
-    const [tv, setTv] = useState(false);
-    const [washer, setWasher] = useState(false);
-    const [parking, setParking] = useState(false);
-    const [airConditioning, setAirConditioning] = useState(false);
-    const [pool, setPool] = useState(false);
-    const [firstAid, setFirstAid] = useState(false);
-    const [fireExtinguisher, setFireExtinguisher] = useState(false);
+    const {wifi, setWifi, tv, setTv, washer, setWasher, parking,
+    setParking, airConditioning, setAirConditioning, pool, setPool,
+    firstAid, setFirstAid, fireExtinguisher, 
+    setFireExtinguisher} = useContext(data);
 
   return (
     <View style={[{flex: 1}, {gap: 20}, {paddingHorizontal: 60}, {paddingVertical: 30}]}>

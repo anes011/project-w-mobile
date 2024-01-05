@@ -23,9 +23,11 @@ function AddOfferPage() {
 
     const { width, height } = Dimensions.get('window');
 
-    const [count, setCount] = useState(0);
-
-    const {placeType, spaceGiven, location, locationName} = useContext(data);
+    const { count, setCount, placeType, spaceGiven, location, 
+    locationName, guests, bedrooms, beds, bathrooms,
+    wifi, tv, washer, parking, airConditioning,
+    pool, firstAid, fireExtinguisher, offerPhotos, title, description,
+    price, checkIn, checkOut } = useContext(data);
 
     const decrement = () => {
         if (count <= 0) {
@@ -36,30 +38,30 @@ function AddOfferPage() {
     };
 
     const increment = () => {
-        if (count >= 9) {
-            navigation.navigate('Success');
-            return;
-        } else {
-            if (count === 0 && placeType === null) {
-                Alert.alert('Please choose one!');
-            } else if (count === 1 && spaceGiven === null) {
-                Alert.alert('Please choose one!');
-            } else if (count === 2 && location === null) {
-                Alert.alert("Enter your house's location!");
+        if (count === 0 && placeType === null) {
+            Alert.alert('Please choose one!');
+        } else if (count === 1 && spaceGiven === null) {
+            Alert.alert('Please choose one!');
+        } else if (count === 2 && location === null) {
+            Alert.alert('Select a location!');
+        } else if (count === 5 && offerPhotos === null) {
+            Alert.alert('Select at least 3 photos of your house!');
+        } else if (count === 6 && title === null) {
+            Alert.alert('Title must be at least 4 characters long!');
+        } else if (count === 7 && description === null) {
+            Alert.alert('Description must be at least 10 characters long!');
+        } else if (count === 8 && price === null) {
+            Alert.alert('Please set a price!');
+        } else if (count === 9) {
+            if (checkIn === null || checkOut === null) {
+                Alert.alert('Please Enter correct dates!');
             } else {
-                setCount(count + 1);
+                Alert.alert('Done');
             }
+        } else {
+            setCount (count + 1);
         }
     }
-
-    // useEffect(() => {
-    //     if (count === 0) {
-    //         if (placeType === null) {
-    //             setCount(0);
-    //             Alert.alert('Please choose one!');
-    //         }
-    //     }
-    // });
 
     return(
         <View style={{flex: 1}}>

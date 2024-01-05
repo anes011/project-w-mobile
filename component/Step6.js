@@ -1,7 +1,11 @@
 import { View, Text, Pressable, Alert, Image } from 'react-native'
 import * as DocumentPicker from 'expo-document-picker';
+import data from '../Context';
+import { useContext } from 'react';
 
 const Step6 = () => {
+
+    const {offerPhotos, setOfferPhotos} = useContext(data);
 
     const pickDocument = async () => {
         try {
@@ -12,9 +16,9 @@ const Step6 = () => {
 
             if (result.canceled) {
                 Alert.alert('No photos were selected!')
-            } else {
-                result.assets.map((x) => {console.log(x)});
-            }
+            } else if (result.assets.length >= 3) {
+                setOfferPhotos(result);
+            };
         } catch (err) {
             console.error(err);
         }

@@ -24,23 +24,8 @@ import ProfilePage from "./pages/ProfilePage";
 
 export default function App() {
 
-  SplashScreen.preventAutoHideAsync();
-
-  const [fontsLoaded] = useFonts({
-    "Poppins-Thin": require("./assets/fonts/Poppins-Thin.ttf"),
-    "Poppins-Regular": require("./assets/fonts/Poppins-Regular.ttf"),
-    "Poppins-Medium": require("./assets/fonts/Poppins-Medium.ttf"),
-    "Poppins-Light": require("./assets/fonts/Poppins-Light.ttf"),
-    "Poppins-Bold": require("./assets/fonts/Poppins-Bold.ttf"),
-  });
-
-  const onLayoutRootView = useCallback(async () => {
-    if (fontsLoaded) {
-      await SplashScreen.hideAsync();
-    }
-  }, [fontsLoaded]);
-
   //States to be transfered to other components with context api
+  const [count, setCount] = useState(0);
   const [placeType, setPlaceType] = useState(null);
   const [spaceGiven, setSpaceGiven] = useState(null);
   const [location, setLocation] = useState(null);
@@ -65,21 +50,45 @@ export default function App() {
   const [checkOut, setCheckOut] = useState(null);
   //end of states for context
 
+
+  //Navigation set up:
   const Stack = createNativeStackNavigator();
+
+
+
+  //Fonts code:
+  SplashScreen.preventAutoHideAsync();
+
+  const [fontsLoaded] = useFonts({
+    "Poppins-Thin": require("./assets/fonts/Poppins-Thin.ttf"),
+    "Poppins-Regular": require("./assets/fonts/Poppins-Regular.ttf"),
+    "Poppins-Medium": require("./assets/fonts/Poppins-Medium.ttf"),
+    "Poppins-Light": require("./assets/fonts/Poppins-Light.ttf"),
+    "Poppins-Bold": require("./assets/fonts/Poppins-Bold.ttf"),
+  });
+
+  const onLayoutRootView = useCallback(async () => {
+    if (fontsLoaded) {
+      await SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded]);
 
   if (!fontsLoaded) {
     return null;
   };
+  //end of fonts code
 
   return (
     <View style={styles.app} onLayout={onLayoutRootView}>
       <StatusBar style="auto" />
-      <data.Provider value={{ placeType, setPlaceType, spaceGiven,
-      setSpaceGiven, location, setLocation, locationName, setLocationName,
-      guests, setGuests, bedrooms, setBedrooms, beds, setBeds, bathrooms, 
-      setBathrooms, wifi, setWifi, tv, setTv, washer, setWasher, parking, 
-      setParking, airConditioning, setAirConditioning, pool, setPool, firstAid,
-      setFirstAid, fireExtinguisher, setFireExtinguisher, offerPhotos,
+      <data.Provider value={{ count, setCount, placeType, 
+      setPlaceType, spaceGiven,setSpaceGiven, 
+      location, setLocation, locationName, setLocationName,
+      guests, setGuests, bedrooms, setBedrooms, beds, setBeds, 
+      bathrooms, setBathrooms, wifi, setWifi, tv, setTv, washer, 
+      setWasher, parking, setParking, airConditioning, 
+      setAirConditioning, pool, setPool, firstAid, setFirstAid, 
+      fireExtinguisher, setFireExtinguisher, offerPhotos,
       setOfferPhotos, title, setTitle, description, setDescription,
       price, setPrice, checkIn, setCheckIn, checkOut, setCheckOut }}>
         <NavigationContainer>

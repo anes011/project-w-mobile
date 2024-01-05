@@ -1,13 +1,12 @@
 import { View, Text, Pressable } from 'react-native'
 import { Feather } from '@expo/vector-icons';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import data from '../Context';
 
 const Step4 = () => {
 
-    const [guests, setGuests] = useState(0);
-    const [bedrooms, setBedrooms] = useState(0);
-    const [beds, setBeds] = useState(0);
-    const [bathrooms, setBathrooms] = useState(0);
+    const {guests, setGuests, bedrooms, setBedrooms, beds, setBeds,
+    bathrooms, setBathrooms} = useContext(data);
 
     const decrementGuests = () => {
         if (guests <= 0) {
