@@ -1,65 +1,85 @@
-import { View, Text, TouchableOpacity, Image, StyleSheet, Dimensions, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, Image, StyleSheet, Dimensions, ScrollView, FlatList } from 'react-native';
 import { BlurView } from 'expo-blur';
 import { FontAwesome } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import { useEffect, useState, useContext } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import data from '../Context';
 
 function MyOffers() {
 
     const {height, width} = Dimensions.get('window');
 
+    const {offerPressed, setOfferPressed} = useContext(data);
+
     const navigation = useNavigation();
 
-    const goToOffer = () => {
+    const [hostID, setHostID] = useState(null);
+    const [offerData, setOfferData] = useState(null);
+
+    useEffect(() => {
+        const offerApi = async () => {
+            try {
+                const response = await fetch('http://192.168.1.2:4000/offer');
+                const data = await response.json();
+                setOfferData(data.offers);
+            } catch (err) {
+                console.error(err);
+            }
+        };
+
+        offerApi();
+    }, []);
+
+    const asyncStorage = async () => {
+        try {
+            const response = await AsyncStorage.getItem('userInfo');
+            setHostID(JSON.parse(response)._id);
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    asyncStorage();
+
+    const goToOffer = (_id) => {
         navigation.navigate('Offer');
+
+        const target = offerData.find((x) => x._id === _id);
+        setOfferPressed(target);
     };
 
     return(
-        <ScrollView style={[{paddingHorizontal: 20}, {paddingTop: 30}]}>
-            <TouchableOpacity onPress={() => navigation.navigate('AddOffer')} style={[{flexDirection: 'row'}, {position: 'absolute'}, {top: 0}, {left: 0}, {right: 0}, {alignItems: 'center'}, {justifyContent: 'center'}, {height: height / 15}, {borderRadius: 30}, {gap: 10}, {backgroundColor: 'rgb(197, 41, 155)'}]}>
+        <View style={[{paddingHorizontal: 20}, {paddingTop: 30}]}>
+            <TouchableOpacity onPress={() => navigation.navigate('AddOffer')} style={[{flexDirection: 'row'}, {position: 'absolute'}, {top: 30}, {left: 20}, {right: 20}, {alignItems: 'center'}, {justifyContent: 'center'}, {height: height / 15}, {borderRadius: 30}, {gap: 10}, {backgroundColor: 'rgb(197, 41, 155)'}]}>
                 <Ionicons name="add-circle-sharp" size={24} color="#fff" />
                 <Text style={[{fontFamily: 'Poppins-Medium'}, {color: '#fff'}]}>Add an Offer</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={goToOffer} style={[styles.offer, {height: height / 1.7}]}>
-                <Image style={{flex: 1}} source={{uri: 'https://cdn.onekindesign.com/wp-content/uploads/2019/11/Striking-Modern-Villa-Design-Marmol-Radziner-02-1-Kindesign.jpg'}} />
-                <BlurView intensity={80} tint='dark' style={[styles.description, {height: height / 6}]}>
-                    <Text style={styles.price}>$100,000</Text>
-                    <Text style={styles.locationDetails}>456 Main St.Anytown, USA 12345</Text>
-                </BlurView>
-                <Text style={styles.type}>House</Text>
-                <View style={styles.rate}>
-                    <FontAwesome name="star" size={24} color="rgb(197, 41, 155)" />
-                    <Text style={styles.rateText}>4.8</Text>
-                </View>
-            </TouchableOpacity>
-
-            <TouchableOpacity style={[styles.offer, {height: height / 1.7}]}>
-                <Image style={{flex: 1}} source={{uri: 'https://cdn.onekindesign.com/wp-content/uploads/2019/11/Striking-Modern-Villa-Design-Marmol-Radziner-02-1-Kindesign.jpg'}} />
-                <BlurView intensity={80} tint='dark' style={[styles.description, {height: height / 6}]}>
-                    <Text style={styles.price}>$100,000</Text>
-                    <Text style={styles.locationDetails}>456 Main St.Anytown, USA 12345</Text>
-                </BlurView>
-                <Text style={styles.type}>House</Text>
-                <View style={styles.rate}>
-                    <FontAwesome name="star" size={24} color="rgb(197, 41, 155)" />
-                    <Text style={styles.rateText}>4.8</Text>
-                </View>
-            </TouchableOpacity>
-
-            <TouchableOpacity style={[styles.offer, {height: height / 1.7}]}>
-                <Image style={{flex: 1}} source={{uri: 'https://cdn.onekindesign.com/wp-content/uploads/2019/11/Striking-Modern-Villa-Design-Marmol-Radziner-02-1-Kindesign.jpg'}} />
-                <BlurView intensity={80} tint='dark' style={[styles.description, {height: height / 6}]}>
-                    <Text style={styles.price}>$100,000</Text>
-                    <Text style={styles.locationDetails}>456 Main St.Anytown, USA 12345</Text>
-                </BlurView>
-                <Text style={styles.type}>House</Text>
-                <View style={styles.rate}>
-                    <FontAwesome name="star" size={24} color="rgb(197, 41, 155)" />
-                    <Text style={styles.rateText}>4.8</Text>
-                </View>
-            </TouchableOpacity>
-        </ScrollView>
+            <View style={[{marginTop: 100}, {height: height / 1.4}]}>
+                <FlatList data={offerData} keyExtractor={item => item._id} renderItem={({item}) => {
+                    if (hostID !== null) {
+                        if (item.hostID === hostID) {
+                            return(
+                                <TouchableOpacity onPress={() => goToOffer(item._id)} style={[styles.offer, {height: height / 1.7}]}>
+                                    <Image style={{flex: 1}} source={{uri: item.offerPhotos[0]}} />
+                                    <BlurView intensity={80} tint='dark' style={[styles.description, {height: height / 6}]}>
+                                        <Text style={styles.price}>{`${item.price} DA`}</Text>
+                                        <Text style={styles.locationDetails}>{item.locationName}</Text>
+                                    </BlurView>
+                                    <Text style={styles.type}>{item.placeType.toUpperCase()}</Text>
+                                    <View style={styles.rate}>
+                                        <FontAwesome name="star" size={24} color="rgb(197, 41, 155)" />
+                                        <Text style={styles.rateText}>4.8</Text>
+                                    </View>
+                                </TouchableOpacity>
+                            )
+                        }
+                    }
+                }} />
+            </View>
+        </View>
     )
 };
 
@@ -67,8 +87,7 @@ const styles = StyleSheet.create({
     offer: {
         borderRadius: 20,
         overflow: 'hidden',
-        position: 'relative',
-        marginTop: 100
+        marginBottom: 30
     },
     description: {
         position: 'absolute',

@@ -38,7 +38,7 @@ const ProgressBox = () => {
   return (
     <View style={[{height: height / 2}, {borderBottomLeftRadius: 50}, {borderBottomRightRadius: 50}, {overflow: 'hidden'}, {backgroundColor: 'rgb(197, 41, 155)'}, {elevation: 50}]}>
       <View style={[{flex: 1}, {overflow: 'hidden'}]}>
-        <Video style={[{flex: 1}]} source={{uri: 'https://res.cloudinary.com/dmvjkyphz/video/upload/v1704475637/Untitled_design_eqrtyi.mp4'}} resizeMode={ResizeMode.STRETCH} shouldPlay isLooping />
+        <Video style={[{flex: 1}]} source={{uri: 'https://res.cloudinary.com/dmvjkyphz/video/upload/v1704475637/Untitled_design_eqrtyi.mp4'}} resizeMode={ResizeMode.STRETCH} shouldPlay isLooping isMuted />
       </View>
 
       <View style={[{flex: 1}, {justifyContent: 'center'}, {alignItems: 'center'}, {paddingHorizontal: 30}]}>

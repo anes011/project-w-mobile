@@ -26,6 +26,7 @@ export default function App() {
 
   //States to be transfered to other components with context api
   const [count, setCount] = useState(0);
+
   const [placeType, setPlaceType] = useState(null);
   const [spaceGiven, setSpaceGiven] = useState(null);
   const [location, setLocation] = useState(null);
@@ -48,6 +49,8 @@ export default function App() {
   const [price, setPrice] = useState(null);
   const [checkIn, setCheckIn] = useState(null);
   const [checkOut, setCheckOut] = useState(null);
+
+  const [offerPressed, setOfferPressed] = useState(null);
   //end of states for context
 
 
@@ -90,7 +93,8 @@ export default function App() {
       setAirConditioning, pool, setPool, firstAid, setFirstAid, 
       fireExtinguisher, setFireExtinguisher, offerPhotos,
       setOfferPhotos, title, setTitle, description, setDescription,
-      price, setPrice, checkIn, setCheckIn, checkOut, setCheckOut }}>
+      price, setPrice, checkIn, setCheckIn, checkOut, setCheckOut,
+      offerPressed, setOfferPressed }}>
         <NavigationContainer>
           <Stack.Navigator initialRouteName="Loading" screenOptions={{
             contentStyle: {backgroundColor: '#fff'},

@@ -1,4 +1,4 @@
-import { View, Text, Pressable, Dimensions, Alert } from 'react-native';
+import { View, Text, Pressable, Dimensions, Alert, ActivityIndicator } from 'react-native';
 import ProgressBox from '../component/ProgressBox';
 import { Entypo } from '@expo/vector-icons';
 import BottomNav from '../component/BottomNav';
@@ -16,6 +16,7 @@ import Step10 from '../component/Step10';
 import { useNavigation } from '@react-navigation/native';
 import data from '../Context';
 import { useContext } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function AddOfferPage() {
 
@@ -28,6 +29,8 @@ function AddOfferPage() {
     wifi, tv, washer, parking, airConditioning,
     pool, firstAid, fireExtinguisher, offerPhotos, title, description,
     price, checkIn, checkOut } = useContext(data);
+
+    const [showFinishLoading, setShowFinishLoading] = useState(false);
 
     const decrement = () => {
         if (count <= 0) {
@@ -56,7 +59,74 @@ function AddOfferPage() {
             if (checkIn === null || checkOut === null) {
                 Alert.alert('Please Enter correct dates!');
             } else {
-                Alert.alert('Done');
+
+                setShowFinishLoading(true);
+
+                const asyncStorage = async () => {
+                    try {
+                        const response = await AsyncStorage.getItem('userInfo');
+                        const hostID = JSON.parse(response)._id;
+
+                        const formData = new FormData();
+
+                        formData.append('hostID', hostID);
+                        formData.append('placeType', placeType);
+                        formData.append('spaceGiven', spaceGiven);
+                        formData.append('location', JSON.stringify(location));
+                        formData.append('locationName', locationName);
+                        formData.append('guests', guests);
+                        formData.append('bedrooms', bedrooms);
+                        formData.append('beds', beds);
+                        formData.append('bathrooms', bathrooms);
+                        formData.append('wifi', wifi);
+                        formData.append('tv', tv);
+                        formData.append('washer', washer);
+                        formData.append('parking', parking);
+                        formData.append('airConditioning', airConditioning);
+                        formData.append('pool', pool);
+                        formData.append('firstAid', firstAid);
+                        formData.append('fireExtinguisher', fireExtinguisher);
+                        offerPhotos.assets.map((x) => {
+                            const file = {
+                                uri: x.uri,
+                                type: x.mimeType,
+                                name: x.name
+                            };
+
+                            formData.append('offerPhotos', file);
+                        });
+                        formData.append('title', title);
+                        formData.append('description', description);
+                        formData.append('price', price);
+                        formData.append('checkIn', checkIn);
+                        formData.append('checkOut', checkOut);
+
+                        const offerApi = async () => {
+                            try {
+                                const response = await fetch('http://192.168.1.2:4000/offer', {
+                                    method: 'POST',
+                                    body: formData
+                                });
+
+                                const data = await response.json();
+                                setShowFinishLoading(false);
+                                
+                                navigation.reset({
+                                    index: 0,
+                                    routes: [{name: 'Success'}]
+                                });
+                            } catch (err) {
+                                console.error(err);
+                            }
+                        };
+
+                        offerApi();
+                    } catch (err) {
+                        console.error(err);
+                    }
+                };
+
+                asyncStorage();
             }
         } else {
             setCount (count + 1);
@@ -90,7 +160,13 @@ function AddOfferPage() {
                 }
 
                 <Pressable onPress={increment} style={[{height: 70}, {width: 70}, {justifyContent: 'center'}, {alignItems: 'center'}, {borderRadius: 100 / 2}, {backgroundColor: '#fff'}, {elevation: 50}]}>
-                    <Entypo name="chevron-small-right" size={27} color="black" />
+                    {
+                        showFinishLoading ? (
+                            <ActivityIndicator color='rgb(197, 41, 155)' />
+                        ) : (
+                            <Entypo name="chevron-small-right" size={27} color="black" />
+                        )
+                    }
                 </Pressable>
             </View>
 
