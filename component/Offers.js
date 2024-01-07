@@ -1,7 +1,10 @@
-import { View, Text, StyleSheet, ScrollView, Dimensions, Image, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Dimensions, Image, TouchableOpacity, FlatList } from 'react-native';
 import { BlurView } from 'expo-blur';
 import { FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import { useEffect, useState, useContext } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import data from '../Context';
 
 function Offers() {
 
@@ -9,117 +12,65 @@ function Offers() {
 
     const { width, height } = Dimensions.get('window');
 
-    const goToOffer = () => {
+    const { setOfferPressed } = useContext(data);
+
+    const [offersData, setOffersData] = useState([]);
+    const [userID, setUserID] = useState(null);
+
+    useEffect(() => {
+        const offersApi = async () => {
+            try {
+                const response = await fetch('http://192.168.1.2:4000/offer');
+                const data = await response.json();
+                setOffersData(data.offers);
+            } catch (err) {
+                console.error(err);
+            }
+        };
+
+        offersApi();
+    }, []);
+
+    const asyncStorage = async () => {
+        try {
+            const response = await AsyncStorage.getItem('userInfo');
+            setUserID(JSON.parse(response)._id);    
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    asyncStorage();
+
+    const goToOffer = (_id) => {
+        const target = offersData.find((x) => x._id === _id);
+        setOfferPressed(target);
+        
         navigation.navigate('Offer');
     };
 
     return(
         <View style={[styles.offerContainer, {height: height / 1.7}]}>
-            <ScrollView>
-                <TouchableOpacity onPress={goToOffer} style={[styles.offer, {height: height / 1.7}]}>
-                    <Image style={{flex: 1}} source={{uri: 'https://cdn.onekindesign.com/wp-content/uploads/2019/11/Striking-Modern-Villa-Design-Marmol-Radziner-02-1-Kindesign.jpg'}} />
-                    <BlurView intensity={80} tint='dark' style={[styles.description, {height: height / 6}]}>
-                        <Text style={styles.price}>$100,000</Text>
-                        <Text style={styles.locationDetails}>456 Main St.Anytown, USA 12345</Text>
-                    </BlurView>
-                    <Text style={styles.type}>House</Text>
-                    <View style={styles.rate}>
-                        <FontAwesome name="star" size={24} color="rgb(197, 41, 155)" />
-                        <Text style={styles.rateText}>4.8</Text>
-                    </View>
-                </TouchableOpacity>
-
-                <View style={[styles.offer, {height: height / 1.7}]}>
-                    <Image style={{flex: 1}} source={{uri: 'https://www.ministryofvillas.com/wp-content/uploads/2021/01/bali-river-house-living.jpg'}} />
-                    <BlurView intensity={50} tint='dark' style={[styles.description, {height: height / 6}]}>
-                        <Text style={styles.price}>$100,000</Text>
-                        <Text style={styles.locationDetails}>456 Main St.Anytown, USA 12345</Text>
-                    </BlurView>
-                    <Text style={styles.type}>House</Text>
-                    <View style={styles.rate}>
-                        <FontAwesome name="star" size={24} color="rgb(197, 41, 155)" />
-                        <Text style={styles.rateText}>4.8</Text>
-                    </View>
-                </View>
-
-                <View style={[styles.offer, {height: height / 1.7}]}>
-                    <Image style={{flex: 1}} source={{uri: 'https://st.hzcdn.com/simgs/2431b87300e1c0e4_14-0233/home-design.jpg'}} />
-                    <BlurView intensity={50} tint='dark' style={[styles.description, {height: height / 6}]}>
-                        <Text style={styles.price}>$100,000</Text>
-                        <Text style={styles.locationDetails}>456 Main St.Anytown, USA 12345</Text>
-                    </BlurView>
-                    <Text style={styles.type}>House</Text>
-                    <View style={styles.rate}>
-                        <FontAwesome name="star" size={24} color="rgb(197, 41, 155)" />
-                        <Text style={styles.rateText}>4.8</Text>
-                    </View>
-                </View>
-
-                <View style={[styles.offer, {height: height / 1.7}]}>
-                    <Image style={{flex: 1}} source={{uri: 'https://www.chandrabalivillas.com/wp-content/uploads/2014/11/5.-Pool-Villa-Living.jpg'}} />
-                    <BlurView intensity={50} tint='dark' style={[styles.description, {height: height / 6}]}>
-                        <Text style={styles.price}>$100,000</Text>
-                        <Text style={styles.locationDetails}>456 Main St.Anytown, USA 12345</Text>
-                    </BlurView>
-                    <Text style={styles.type}>House</Text>
-                    <View style={styles.rate}>
-                        <FontAwesome name="star" size={24} color="rgb(197, 41, 155)" />
-                        <Text style={styles.rateText}>4.8</Text>
-                    </View>
-                </View>
-
-                <View style={[styles.offer, {height: height / 1.7}]}>
-                    <Image style={{flex: 1}} source={{uri: 'https://andaribalivillas.com/wp-content/uploads/2019/01/Andari-Bali-Villas-2-3-bedroom-private-vilas-Legian-Villa-Sayana-3-1030x687.jpg'}} />
-                    <BlurView intensity={50} tint='dark' style={[styles.description, {height: height / 6}]}>
-                        <Text style={styles.price}>$100,000</Text>
-                        <Text style={styles.locationDetails}>456 Main St.Anytown, USA 12345</Text>
-                    </BlurView>
-                    <Text style={styles.type}>House</Text>
-                    <View style={styles.rate}>
-                        <FontAwesome name="star" size={24} color="rgb(197, 41, 155)" />
-                        <Text style={styles.rateText}>4.8</Text>
-                    </View>
-                </View>
-
-                <View style={[styles.offer, {height: height / 1.7}]}>
-                    <Image style={{flex: 1}} source={{uri: 'https://www.conradmaldives.com/wp-content/uploads/2021/05/Grand-Water-Villa-Living-Room.jpg'}} />
-                    <BlurView intensity={50} tint='dark' style={[styles.description, {height: height / 6}]}>
-                        <Text style={styles.price}>$100,000</Text>
-                        <Text style={styles.locationDetails}>456 Main St.Anytown, USA 12345</Text>
-                    </BlurView>
-                    <Text style={styles.type}>House</Text>
-                    <View style={styles.rate}>
-                        <FontAwesome name="star" size={24} color="rgb(197, 41, 155)" />
-                        <Text style={styles.rateText}>4.8</Text>
-                    </View>
-                </View>
-
-                <View style={[styles.offer, {height: height / 1.7}]}>
-                    <Image style={{flex: 1}} source={{uri: 'https://www.hospitalitynet.org/picture/xxl_153107745.jpg?t=1572873778'}} />
-                    <BlurView intensity={50} tint='dark' style={[styles.description, {height: height / 6}]}>
-                        <Text style={styles.price}>$100,000</Text>
-                        <Text style={styles.locationDetails}>456 Main St.Anytown, USA 12345</Text>
-                    </BlurView>
-                    <Text style={styles.type}>House</Text>
-                    <View style={styles.rate}>
-                        <FontAwesome name="star" size={24} color="rgb(197, 41, 155)" />
-                        <Text style={styles.rateText}>4.8</Text>
-                    </View>
-                </View>
-
-                <View style={[styles.offer, {height: height / 1.7}]}>
-                    <Image style={{flex: 1}} source={{uri: 'https://www.nexinteriors.com/wp-content/uploads/2019/11/villa-interior-designs-in-hyderabad-1024x576.jpg'}} />
-                    <BlurView intensity={50} tint='dark' style={[styles.description, {height: height / 6}]}>
-                        <Text style={styles.price}>$100,000</Text>
-                        <Text style={styles.locationDetails}>456 Main St.Anytown, USA 12345</Text>
-                    </BlurView>
-                    <Text style={styles.type}>House</Text>
-                    <View style={styles.rate}>
-                        <FontAwesome name="star" size={24} color="rgb(197, 41, 155)" />
-                        <Text style={styles.rateText}>4.8</Text>
-                    </View>
-                </View>
-            </ScrollView>
+            <FlatList data={offersData} keyExtractor={item => item._id} renderItem={({item}) => {
+                if (userID !== null) {
+                    if (item.hostID !== userID) {
+                        return(
+                            <TouchableOpacity onPress={() => goToOffer(item._id)} style={[styles.offer, {height: height / 1.7}]}>
+                                <Image style={{flex: 1}} source={{uri: item.offerPhotos[0]}} />
+                                <BlurView intensity={80} tint='dark' style={[styles.description, {height: height / 6}]}>
+                                    <Text style={styles.price}>{`${item.price} DA`}</Text>
+                                    <Text style={styles.locationDetails}>{item.locationName}</Text>
+                                </BlurView>
+                                <Text style={styles.type}>{item.placeType.toUpperCase()}</Text>
+                                <View style={styles.rate}>
+                                    <FontAwesome name="star" size={24} color="rgb(197, 41, 155)" />
+                                    <Text style={styles.rateText}>4.8</Text>
+                                </View>
+                            </TouchableOpacity>
+                        )
+                    }
+                }
+            }} />
         </View>
     )
 };

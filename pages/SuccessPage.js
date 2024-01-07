@@ -20,6 +20,20 @@ const SuccessPage = () => {
         }).start()
     });
 
+    const navigateToMyOffers = () => {
+        navigation.reset({
+            index: 0,
+            routes: [{ name: 'Myoffers' }]
+        });
+    };
+
+    const navigateToHome = () => {
+        navigation.reset({
+            index: 0,
+            routes: [{ name: 'Home' }]
+        });
+    };
+
   return (
     <View style={[{flex: 1}]}>
         <Image style={[{height: height / 2}]} source={{uri: 'https://cdn.dribbble.com/users/206390/screenshots/3532189/media/9ade9d41326e1e6b335f986cd3062bb0.gif'}} />
@@ -29,11 +43,11 @@ const SuccessPage = () => {
                 <Ionicons name="checkmark-circle" size={24} color="#fff" />
             </View>
 
-            <Pressable onPress={() => navigation.navigate('Myoffers')} style={[{padding: 20}, {borderRadius: 20}, {backgroundColor: '#fff'}]}>
+            <Pressable onPress={navigateToMyOffers} style={[{padding: 20}, {borderRadius: 20}, {backgroundColor: '#fff'}]}>
                 <Text style={{fontFamily: 'Poppins-Medium'}}>See my offer</Text>
             </Pressable>
 
-            <Pressable onPress={() => navigation.navigate('Home')}>
+            <Pressable onPress={navigateToHome}>
                 <Text style={[{color: '#fff'}, {fontFamily: 'Poppins-Medium'}]}>Go home</Text>
             </Pressable>
         </Animated.View>

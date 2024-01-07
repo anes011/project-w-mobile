@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Image, StyleSheet, Dimensions, ScrollView, FlatList } from 'react-native';
+import { View, Text, TouchableOpacity, Image, StyleSheet, Dimensions, ScrollView, FlatList, Pressable, Alert, ImageBackground } from 'react-native';
 import { BlurView } from 'expo-blur';
 import { FontAwesome } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
@@ -6,6 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useEffect, useState, useContext } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import data from '../Context';
+import { Octicons } from '@expo/vector-icons';
 
 function MyOffers() {
 
@@ -50,6 +51,27 @@ function MyOffers() {
         setOfferPressed(target);
     };
 
+    const deleteOffer = (_id) => {
+        const target = offerData.find((x) => x._id === _id);
+        
+        const deleteOfferApi = async () => {
+            try {
+                const response = await fetch(`http://192.168.1.2:4000/offer/${target._id}`, {
+                    method: 'DELETE'
+                });
+
+                const data = await response.json();
+
+                Alert.alert('Offer deleted successfully!, it might take some time to fully delete');
+                navigation.navigate('Profile');
+            } catch (err) {
+                console.error(err);
+            }
+        };
+
+        deleteOfferApi();
+    };
+
     return(
         <View style={[{paddingHorizontal: 20}, {paddingTop: 30}]}>
             <TouchableOpacity onPress={() => navigation.navigate('AddOffer')} style={[{flexDirection: 'row'}, {position: 'absolute'}, {top: 30}, {left: 20}, {right: 20}, {alignItems: 'center'}, {justifyContent: 'center'}, {height: height / 15}, {borderRadius: 30}, {gap: 10}, {backgroundColor: 'rgb(197, 41, 155)'}]}>
@@ -65,8 +87,14 @@ function MyOffers() {
                                 <TouchableOpacity onPress={() => goToOffer(item._id)} style={[styles.offer, {height: height / 1.7}]}>
                                     <Image style={{flex: 1}} source={{uri: item.offerPhotos[0]}} />
                                     <BlurView intensity={80} tint='dark' style={[styles.description, {height: height / 6}]}>
-                                        <Text style={styles.price}>{`${item.price} DA`}</Text>
-                                        <Text style={styles.locationDetails}>{item.locationName}</Text>
+                                        <View style={[{gap: 5}]}>
+                                            <Text style={styles.price}>{`${item.price} DA`}</Text>
+                                            <Text style={styles.locationDetails}>{item.locationName}</Text>
+                                        </View>
+
+                                        <Pressable onPress={() => deleteOffer(item._id)} style={[{backgroundColor: '#fff'}, {height: 70}, {width: 70}, {borderRadius: 100 / 2}, {justifyContent: 'center'}, {alignItems: 'center'}, {backgroundColor: 'rgb(197, 41, 155)'}]}>
+                                            <Octicons name="trash" size={24} color="#fff" />
+                                        </Pressable>
                                     </BlurView>
                                     <Text style={styles.type}>{item.placeType.toUpperCase()}</Text>
                                     <View style={styles.rate}>
@@ -95,7 +123,8 @@ const styles = StyleSheet.create({
         left: 0,
         right: 0,
         padding: 30,
-        gap: 20
+        flexDirection: 'row',
+        justifyContent: 'space-between'
     },
     price: {
         fontSize: 25,
@@ -104,7 +133,8 @@ const styles = StyleSheet.create({
     },
     locationDetails: {
         color: '#fff',
-        fontFamily: 'Poppins-Regular'
+        fontFamily: 'Poppins-Regular',
+        width: 200
     },
     type: {
         position: 'absolute',

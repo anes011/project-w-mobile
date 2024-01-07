@@ -6,53 +6,65 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
+import data from '../Context';
+import { useContext } from 'react';
 
 function OfferDetails() {
 
     const { width, height } = Dimensions.get('window');
 
+    const { offerPressed } = useContext(data);
+
     return(
         <View style={[{marginTop: 20}]}>
-            <View style={styles.amenitiesPart1}>
-                <View style={styles.amenitiesPart1CardContainer}>
-                    <View style={styles.amenitiesPart1Card}>
-                        <Octicons name="people" size={24} color="#000" />
+            {
+                offerPressed !== null && (
+                    <View style={styles.amenitiesPart1}>
+                        <View style={styles.amenitiesPart1CardContainer}>
+                            <View style={styles.amenitiesPart1Card}>
+                                <Octicons name="people" size={24} color="#000" />
+                            </View>
+                            <View style={styles.amenitiesPart1Text}>
+                                <Text style={styles.amenitiesPart1Title}>Guests</Text>
+                                <Text style={styles.amenitiesPart1Number}>{offerPressed.guests}</Text>
+                            </View>
+                        </View>
+                        <View style={styles.amenitiesPart1CardContainer}>
+                            <View style={styles.amenitiesPart1Card}>
+                                <Ionicons name="bed-outline" size={24} color="#000" />
+                            </View>
+                            <View style={styles.amenitiesPart1Text}>
+                                <Text style={styles.amenitiesPart1Title}>Bedrooms</Text>
+                                <Text style={styles.amenitiesPart1Number}>{offerPressed.bedrooms}</Text>
+                            </View>
+                        </View>
+                        <View style={styles.amenitiesPart1CardContainer}>
+                            <View style={styles.amenitiesPart1Card}>
+                                <MaterialCommunityIcons name="bed-outline" size={24} color="#000" />
+                            </View>
+                            <View style={styles.amenitiesPart1Text}>
+                                <Text style={styles.amenitiesPart1Title}>Beds</Text>
+                                <Text style={styles.amenitiesPart1Number}>{offerPressed.beds}</Text>
+                            </View>
+                        </View>
+                        <View style={styles.amenitiesPart1CardContainer}>
+                            <View style={styles.amenitiesPart1Card}>
+                                <MaterialCommunityIcons name="bathtub-outline" size={24} color="#000" />
+                            </View>
+                            <View style={styles.amenitiesPart1Text}>
+                                <Text style={styles.amenitiesPart1Title}>Bathrooms</Text>
+                                <Text style={styles.amenitiesPart1Number}>{offerPressed.bathrooms}</Text>
+                            </View>
+                        </View>
                     </View>
-                    <View style={styles.amenitiesPart1Text}>
-                        <Text style={styles.amenitiesPart1Title}>Guests</Text>
-                        <Text style={styles.amenitiesPart1Number}>0</Text>
-                    </View>
-                </View>
-                <View style={styles.amenitiesPart1CardContainer}>
-                    <View style={styles.amenitiesPart1Card}>
-                        <Ionicons name="bed-outline" size={24} color="#000" />
-                    </View>
-                    <View style={styles.amenitiesPart1Text}>
-                        <Text style={styles.amenitiesPart1Title}>Bedrooms</Text>
-                        <Text style={styles.amenitiesPart1Number}>2</Text>
-                    </View>
-                </View>
-                <View style={styles.amenitiesPart1CardContainer}>
-                    <View style={styles.amenitiesPart1Card}>
-                        <MaterialCommunityIcons name="bed-outline" size={24} color="#000" />
-                    </View>
-                    <View style={styles.amenitiesPart1Text}>
-                        <Text style={styles.amenitiesPart1Title}>Beds</Text>
-                        <Text style={styles.amenitiesPart1Number}>2</Text>
-                    </View>
-                </View>
-                <View style={styles.amenitiesPart1CardContainer}>
-                    <View style={styles.amenitiesPart1Card}>
-                        <MaterialCommunityIcons name="bathtub-outline" size={24} color="#000" />
-                    </View>
-                    <View style={styles.amenitiesPart1Text}>
-                        <Text style={styles.amenitiesPart1Title}>Bathrooms</Text>
-                        <Text style={styles.amenitiesPart1Number}>1</Text>
-                    </View>
-                </View>
-            </View>
+                )
+            }
 
-            <Text style={styles.title}>This is a title!</Text>
+            {
+                offerPressed !== null && (
+                    <Text style={styles.title}>{offerPressed.title}</Text>
+                )
+            }
 
             <View style={styles.spaceGivenContainer}>
                 <View style={styles.spaceGivenCard}>
@@ -60,61 +72,109 @@ function OfferDetails() {
                 </View>
                 <View>
                     <Text style={styles.spaceGivenTitle}>Space given:</Text>
-                    <Text style={styles.spaceGivenText}>Entire place</Text>
+                    {
+                        offerPressed !== null && (
+                            <Text style={styles.spaceGivenText}>{offerPressed.spaceGiven}</Text>
+                        )
+                    }
                 </View>
             </View>
 
-            <View style={styles.amenitiesPart2}>
-                <View style={styles.amenitiesPart2Card}>
-                    <AntDesign name="wifi" size={24} color="#000" />
-                </View>
+            {
+                offerPressed !== null && (
+                    <View style={styles.amenitiesPart2}>
+                        {
+                            offerPressed.wifi && (
+                                <View style={styles.amenitiesPart2Card}>
+                                    <AntDesign name="wifi" size={24} color="#000" />
+                                </View>
+                            )
+                        }
 
-                <View style={styles.amenitiesPart2Card}>
-                    <Ionicons name="tv-outline" size={24} color="#000" />
-                </View>
+                        {
+                            offerPressed.tv && (
+                                <View style={styles.amenitiesPart2Card}>
+                                    <Ionicons name="tv-outline" size={24} color="#000" />
+                                </View>
+                            )
+                        }
 
-                <View style={styles.amenitiesPart2Card}>
-                    <MaterialCommunityIcons name="washing-machine" size={24} color="#000" />
-                </View>
+                        {
+                            offerPressed.washer && (
+                                <View style={styles.amenitiesPart2Card}>
+                                    <MaterialCommunityIcons name="washing-machine" size={24} color="#000" />
+                                </View>
+                            )
+                        }
 
-                <View style={styles.amenitiesPart2Card}>
-                    <MaterialIcons name="local-parking" size={24} color="#000" />
-                </View>
+                        {
+                            offerPressed.parking && (
+                                <View style={styles.amenitiesPart2Card}>
+                                    <MaterialIcons name="local-parking" size={24} color="#000" />
+                                </View>
+                            )
+                        }
 
-                <View style={styles.amenitiesPart2Card}>
-                    <FontAwesome name="snowflake-o" size={24} color="#000" />
-                </View>
+                        {
+                            offerPressed.airConditioning && (
+                                <View style={styles.amenitiesPart2Card}>
+                                    <FontAwesome name="snowflake-o" size={24} color="#000" />
+                                </View>
+                            )
+                        }
 
-                <View style={styles.amenitiesPart2Card}>
-                    <FontAwesome5 name="swimming-pool" size={24} color="#000" />
-                </View>
+                        {
+                            offerPressed.pool && (
+                                <View style={styles.amenitiesPart2Card}>
+                                    <FontAwesome5 name="swimming-pool" size={24} color="#000" />
+                                </View>
+                            )
+                        }
 
-                <View style={styles.amenitiesPart2Card}>
-                    <FontAwesome5 name="first-aid" size={24} color="#000" />
-                </View>
+                        {
+                            offerPressed.firstAid && (
+                                <View style={styles.amenitiesPart2Card}>
+                                    <FontAwesome5 name="first-aid" size={24} color="#000" />
+                                </View>
+                            )
+                        }
 
-                <View style={styles.amenitiesPart2Card}>
-                    <FontAwesome name="fire-extinguisher" size={24} color="#000" />
-                </View>
-            </View>
+                        {
+                            offerPressed.fireExtinguisher && (
+                                <View style={styles.amenitiesPart2Card}>
+                                    <FontAwesome name="fire-extinguisher" size={24} color="#000" />
+                                </View>
+                            )
+                        }
+                    </View>
+                )
+            }
 
-            <Text style={styles.description}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae debitis rerum ducimus, ipsam autem voluptates vel maxime asperiores rem ut totam soluta reprehenderit unde doloribus nam adipisci. Delectus, quaerat est? Similique eaque quas ab, aliquid eos maiores, accusantium aliquam tempore quis ut iusto eveniet amet at itaque aspernatur! Distinctio, fugit!</Text>
+            {
+                offerPressed !== null && (
+                    <Text style={styles.description}>{offerPressed.description}</Text>
+                )
+            }
 
-            <View style={styles.date}>
-                <View style={styles.dateCard}>
-                    <AntDesign name="calendar" size={24} color="#000" />
-                </View>
+            {
+                offerPressed !== null && (
+                    <View style={styles.date}>
+                        <View style={styles.dateCard}>
+                            <AntDesign name="calendar" size={24} color="#000" />
+                        </View>
 
-                <View>
-                    <Text style={styles.dateTitle}>Check in:</Text>
-                    <Text style={styles.dateText}>05/03/2020</Text>
-                </View>
+                        <View>
+                            <Text style={styles.dateTitle}>Check in:</Text>
+                            <Text style={styles.dateText}>{offerPressed.checkIn}</Text>
+                        </View>
 
-                <View>
-                    <Text style={styles.dateTitle}>Check out:</Text>
-                    <Text style={styles.dateText}>05/10/2020</Text>
-                </View>
-            </View>
+                        <View>
+                            <Text style={styles.dateTitle}>Check out:</Text>
+                            <Text style={styles.dateText}>{offerPressed.checkOut}</Text>
+                        </View>
+                    </View>
+                )
+            }
         </View>
     )
 };

@@ -20,6 +20,7 @@ import AcceptedReservationsPage from "./pages/AcceptedReservationsPage";
 import HomePage from "./pages/HomePage";
 import OfferPage from "./pages/OfferPage";
 import ProfilePage from "./pages/ProfilePage";
+import OfferPhotosPage from "./pages/OfferPhotosPage";
 //end of imported pages
 
 export default function App() {
@@ -115,6 +116,7 @@ export default function App() {
             <Stack.Screen name="Carte" component={CartePage} />
             <Stack.Screen name="Favourites" component={FavouritesPage} />
             <Stack.Screen name="Loading" component={LoadingPage} />
+            <Stack.Screen name="OfferPhotos" component={OfferPhotosPage} />
           </Stack.Navigator>
         </NavigationContainer>
       </data.Provider>
