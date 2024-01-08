@@ -1,7 +1,9 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, Dimensions, Pressable, Alert, ActivityIndicator } from 'react-native';
 import data from '../Context';
 import { useContext, useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { AntDesign } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 
 function OfferHost() {
 
@@ -10,7 +12,10 @@ function OfferHost() {
     const { offerPressed } = useContext(data);
     
     const [host, setHost] = useState(null);
-    const [userID, setUserID] = useState(null);
+    const [user, setUser] = useState(null);
+
+    const [confirmReservation, setConfirmReservation] = useState(false);
+    const [reservationLoading, setReservationLoading] = useState(false);
 
     useEffect(() => {
         const usersApi = async () => {
@@ -31,18 +36,60 @@ function OfferHost() {
         };
 
         usersApi();
+    }, [host]);
+
+    useEffect(() => {
+        const asyncStorage = async () => {
+            try {
+                const response = await AsyncStorage.getItem('userInfo');
+                setUser(JSON.parse(response));
+            } catch (err) {
+                console.error(err);
+            }
+        };
+    
+        asyncStorage();
     }, []);
 
-    const asyncStorage = async () => {
-        try {
-            const response = await AsyncStorage.getItem('userInfo');
-            setUserID(JSON.parse(response)._id);
-        } catch (err) {
-            console.error(err);
-        }
+    const confirm = () => {
+        setConfirmReservation(true);
     };
 
-    asyncStorage();
+    const reserve = () => {
+        setReservationLoading(true);
+
+        if (user !== null && offerPressed !== null) {
+            const reserveApi = async () => {
+                try {
+                    const response = await fetch('http://192.168.1.2:4000/reserve', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            reservistID: user._id,
+                            hostID: offerPressed.hostID,
+                            locationName: offerPressed.locationName,
+                            offerPrice: offerPressed.price,
+                            offerTitle: offerPressed.title,
+                            reservistPhoto: user.profilePhoto,
+                            reservistName: user.fullName
+                        })
+                    });
+
+                    const data = await response.json();
+
+                    setReservationLoading(false);
+                    setConfirmReservation(false);
+                    Alert.alert('Reserved successfully!');
+                } catch (err) {
+                    console.error(err);
+                }
+            };
+
+            reserveApi();
+        }
+    };
 
     return(
         <View style={[{marginTop: 20}]}>
@@ -59,13 +106,37 @@ function OfferHost() {
             }
 
             {
-                host !== null && userID !== null && (
+                offerPressed !== null && user !== null && (
                     <>
                         {
-                            host._id !== userID && (
-                                <TouchableOpacity style={[styles.reserveBtn, {height: height / 10}]}>
-                                    <Text style={styles.reserveText}>Reserve</Text>
-                                </TouchableOpacity>
+                            offerPressed.hostID !== user._id && (
+                                <Pressable onPress={confirm} style={[styles.reserveBtn, {height: height / 10}]}>
+                                    {
+                                        confirmReservation ? (
+                                            <View style={[{flexDirection: 'row'}, {gap: 40}]}>
+                                                <Pressable onPress={reserve} style={[{backgroundColor: '#000'}, {padding: 10}, {borderRadius: 30}, {alignItems: 'center'}]}>
+                                                    {
+                                                        reservationLoading ? (
+                                                            <ActivityIndicator color='#fff' />
+                                                        ) : (
+                                                            <>
+                                                                <Feather name="check" size={24} color="#fff" />
+                                                                <Text style={[{color: '#fff'}, {fontFamily: 'Poppins-Regular'}]}>Reserve now!</Text>
+                                                            </>
+                                                        )
+                                                    }
+                                                </Pressable>
+
+                                                <Pressable onPress={() => setConfirmReservation(false)} style={[{backgroundColor: '#000'}, {padding: 10}, {borderRadius: 30}, {alignItems: 'center'}]}>
+                                                    <AntDesign name="close" size={24} color="#fff" />
+                                                    <Text style={[{color: '#fff'}, {fontFamily: 'Poppins-Regular'}]}>That was a mistake!</Text>
+                                                </Pressable>
+                                            </View>
+                                        ) : (
+                                            <Text style={styles.reserveText}>Reserve</Text>
+                                        )
+                                    }
+                                </Pressable>
                             )
                         }
                     </>
