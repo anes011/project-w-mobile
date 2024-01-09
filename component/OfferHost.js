@@ -4,8 +4,11 @@ import { useContext, useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AntDesign } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 function OfferHost() {
+
+    const navigation = useNavigation();
 
     const { width, height } = Dimensions.get('window');
 
@@ -69,6 +72,7 @@ function OfferHost() {
                         body: JSON.stringify({
                             reservistID: user._id,
                             hostID: offerPressed.hostID,
+                            offerID: offerPressed._id,
                             locationName: offerPressed.locationName,
                             offerPrice: offerPressed.price,
                             offerTitle: offerPressed.title,
@@ -81,7 +85,7 @@ function OfferHost() {
 
                     setReservationLoading(false);
                     setConfirmReservation(false);
-                    Alert.alert('Reserved successfully!');
+                    navigation.navigate('Carte');
                 } catch (err) {
                     console.error(err);
                 }

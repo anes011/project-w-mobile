@@ -21,6 +21,7 @@ import HomePage from "./pages/HomePage";
 import OfferPage from "./pages/OfferPage";
 import ProfilePage from "./pages/ProfilePage";
 import OfferPhotosPage from "./pages/OfferPhotosPage";
+import OfferBillPage from "./pages/OfferBillPage";
 //end of imported pages
 
 export default function App() {
@@ -52,6 +53,9 @@ export default function App() {
   const [checkOut, setCheckOut] = useState(null);
 
   const [offerPressed, setOfferPressed] = useState(null);
+  const [phoneNumber, setPhoneNumber] = useState(null);
+  const [email, setEmail] = useState(null);
+  const [acceptedDate, setAcceptedDate] = useState(null);
   //end of states for context
 
 
@@ -95,7 +99,8 @@ export default function App() {
       fireExtinguisher, setFireExtinguisher, offerPhotos,
       setOfferPhotos, title, setTitle, description, setDescription,
       price, setPrice, checkIn, setCheckIn, checkOut, setCheckOut,
-      offerPressed, setOfferPressed }}>
+      offerPressed, setOfferPressed, phoneNumber, setPhoneNumber,
+      email, setEmail, acceptedDate, setAcceptedDate }}>
         <NavigationContainer>
           <Stack.Navigator initialRouteName="Loading" screenOptions={{
             contentStyle: {backgroundColor: '#fff'},
@@ -117,6 +122,7 @@ export default function App() {
             <Stack.Screen name="Favourites" component={FavouritesPage} />
             <Stack.Screen name="Loading" component={LoadingPage} />
             <Stack.Screen name="OfferPhotos" component={OfferPhotosPage} />
+            <Stack.Screen name="OfferBill" component={OfferBillPage} />
           </Stack.Navigator>
         </NavigationContainer>
       </data.Provider>
