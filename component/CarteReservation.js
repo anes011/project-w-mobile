@@ -1,4 +1,4 @@
-import { View, Text, Dimensions, ScrollView, FlatList, Pressable, Alert } from 'react-native';
+import { View, Text, Dimensions, ScrollView, FlatList, Pressable, Alert, ActivityIndicator } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -16,6 +16,7 @@ const CarteReservation = () => {
 
     const [reservations, setReservations] = useState([]);
     const [userID, setUserID] = useState(null);
+    const [deleteLoading, setDeleteLoading] = useState(false);
 
     useEffect(() => {
         const reservationsApi = async () => {
@@ -44,6 +45,8 @@ const CarteReservation = () => {
     }, []);
 
     const deleteReservation = (_id) => {
+        setDeleteLoading(true);
+
         const target = reservations.find((x) => x._id === _id);
 
         const deleteApi = async () => {
@@ -53,6 +56,8 @@ const CarteReservation = () => {
                 });
 
                 const data = await response.json();
+
+                setDeleteLoading(false);
                 Alert.alert('Reservation deleted successfully!');
                 navigation.navigate('Home');
             } catch (err) {
@@ -108,7 +113,13 @@ const CarteReservation = () => {
                                         </View>
 
                                         <Pressable onPress={() => deleteReservation(item._id)} style={[{backgroundColor: '#fff'}, {height: 50}, {width: 50}, {borderRadius: 100 / 2}, {justifyContent: 'center'}, {alignItems: 'center'}, {position: 'absolute'}, {right: 0}, {bottom: 0}]}>
-                                            <Octicons name="trash" size={24} color="#000" />
+                                            {
+                                                deleteLoading ? (
+                                                    <ActivityIndicator color='#000' />
+                                                ) : (
+                                                    <Octicons name="trash" size={24} color="#000" />
+                                                )
+                                            }
                                         </Pressable>
                                     </View>
                                 </View>
