@@ -6,6 +6,7 @@ import { Feather } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
+import socket from '../SocketService';
 
 const ReceivedReservation = () => {
 
@@ -127,6 +128,12 @@ const ReceivedReservation = () => {
 
         rejectApi();
     };
+
+    useEffect(() => {
+        socket.on('receivedRes', (msg) => {
+            setReservations(prev => [...prev, msg]);
+        });
+    }, []);
 
   return (
     <View>

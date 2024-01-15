@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AntDesign } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import socket from '../SocketService';
 
 function OfferHost() {
 
@@ -82,6 +83,8 @@ function OfferHost() {
                     });
 
                     const data = await response.json();
+
+                    socket.emit('reserve', data.reservation);
 
                     setReservationLoading(false);
                     setConfirmReservation(false);
