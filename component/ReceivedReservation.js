@@ -82,6 +82,8 @@ const ReceivedReservation = () => {
 
                     const data = await response.json();
 
+                    socket.emit('accept', data.acceptedReservation);
+
                     const deleteApi = async () => {
                         try {
                             const response = await fetch(`http://192.168.1.2:4000/reserve/${target._id}`, {

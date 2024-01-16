@@ -6,6 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState, useContext } from 'react';
 import data from '../Context';
 import { Octicons } from '@expo/vector-icons';
+import socket from '../SocketService';
 
 function AcceptedReservation() {
 
@@ -95,6 +96,12 @@ function AcceptedReservation() {
 
         deleteApi();
     };
+
+    useEffect(() => {
+        socket.on('accepted', (msg) => {
+            setAcceptedData(prev => [...prev, msg]);
+        });
+    }, []);
 
     return(
         <View>
